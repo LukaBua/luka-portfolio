@@ -45,9 +45,21 @@ interface ProjectItem {
   subtitle: string;
   metricBadges: MetricBadge[];
   tags: string[];
-  description: string;
   telemetryBullets: TelemetryBullet[];
   accent?: 'cyan' | 'amber';
+}
+
+interface CourseItem {
+  code: string;
+  title: string;
+  domain: string;
+  highlight?: boolean;
+}
+
+interface SpokenLanguageItem {
+  language: string;
+  level: string;
+  note: string;
 }
 
 interface BenchmarkFigure {
@@ -70,24 +82,94 @@ const ADCS_METRIC_BADGES: MetricBadge[] = [
 
 const ADCS_TELEMETRY_BULLETS: TelemetryBullet[] = [
   {
-    label: 'Sample Size & Verification',
+    label: 'Zero-State Fault Immunity',
     detail:
-      'Conducted 1,400 distinct Monte Carlo 6-DoF simulation trajectories benchmarking a memoryless PPO agent against classical PID under extreme simulated radiation environments.',
+      'Eliminated integral windup during radiation-induced Single-Event Functional Interrupts (SEFIs) by mapping instantaneous quaternion and rate errors directly to reaction wheel torque commands via a stateless MLP policy.',
   },
   {
-    label: 'Radiation Tolerance',
+    label: 'Storm Envelope & Recovery',
     detail:
-      'Bounded worst-case pointing errors to 35.07° under 1000x solar storm intensity spikes where traditional integral terms diverged, preventing catastrophic loss of mission.',
+      'Prevented satellite tumbling across logarithmic proton flux sweeps (0x to 1000x), cutting attitude dispersion by 46.8% compared to classical PID when sensor bit-flips and torque impulses coincide.',
   },
   {
-    label: 'Embedded Optimization',
+    label: 'Bare-Metal Flight Quantization',
     detail:
-      'Quantized the deep policy network weights down to a 5.3 KB binary footprint compatible with bare-metal ARM Cortex-M microcontrollers.',
+      'Compressed trained PyTorch policy weights using post-training INT8 quantization into a static C header with zero dynamic heap allocation for deterministic execution on ARM Cortex-M flight controllers.',
   },
   {
-    label: 'Actuator Efficiency',
+    label: 'Desaturation & Torque Economy',
     detail:
-      'Achieved a 30% net reduction in total reaction wheel control effort alongside sub-degree (<1.0°) science pointing during quiet-sun nominal states.',
+      'Avoided 5.0 mN·m reaction wheel stall saturation during high-rate detumbling while preserving wheel momentum margins (< 3.14 mN·m·s).',
+  },
+];
+
+const RIGOROUS_COURSES: CourseItem[] = [
+  {
+    code: 'ES 361',
+    title: 'Computing Methods in Engineering',
+    domain: 'UPPER-DIV NUMERICAL ANALYSIS & SOLVERS',
+    highlight: true,
+  },
+  {
+    code: 'AEE 231',
+    title: 'Thermodynamics',
+    domain: 'AEROSPACE ENERGY CYCLES & ENTROPY',
+    highlight: true,
+  },
+  {
+    code: 'AEE 172',
+    title: 'Introduction to Aircraft Performance',
+    domain: 'FLIGHT ENVELOPES & PROPULSION MECHANICS',
+    highlight: true,
+  },
+  {
+    code: 'AEE 261',
+    title: 'Statics',
+    domain: '3D RIGID-BODY EQUILIBRIUM & LOADS',
+  },
+  {
+    code: 'METE 230',
+    title: 'Fundamentals of Materials Science & Eng.',
+    domain: 'CRYSTALLOGRAPHY, ALLOYS & DEFORMATION',
+  },
+  {
+    code: 'MATH 119 / 120',
+    title: 'Single & Multivariable Calculus',
+    domain: 'ANALYTIC GEOMETRY, PARTIAL DERIVATIVES & VECTOR CALC',
+    highlight: true,
+  },
+  {
+    code: 'PHYS 105 / 106',
+    title: 'General Physics I & II',
+    domain: 'NEWTONIAN MECHANICS & ELECTROMAGNETISM',
+  },
+  {
+    code: 'CENG 240 / ME 105',
+    title: 'Python for Engineers & CAD Graphics',
+    domain: 'ALGORITHMIC COMPUTING & TECHNICAL DRAFTING',
+  },
+];
+
+const SPOKEN_LANGUAGES: SpokenLanguageItem[] = [
+  {
+    language: 'Georgian',
+    level: 'NATIVE',
+    note: 'Primary Mother Tongue',
+  },
+  {
+    language: 'English',
+    level: 'FLUENT // C1–C2',
+    note: 'Full Academic & Technical (AA in ENG 101 & ENG 211)',
+  },
+  {
+    language: 'Russian',
+    level: 'FLUENT // CONV.',
+    note: 'Bilingual / Working Communication',
+  },
+  {
+    language: 'Turkish',
+    level: 'CONVERSATIONAL',
+    note: 'Daily Operations (Ankara, TR // TURK 105)',
   },
 ];
 
@@ -129,31 +211,24 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
     id: 'mit-tot-robot',
     sysTag: '[SYS.ROBO.02 // MIT.TOT]',
     coordTag: 'RANK: #1 // 2 MIT PHDs',
-    title: 'Autonomous Obstacle-Avoiding & Object-Tracking Robot (MIT ToT Program)',
-    subtitle: 'MIT PhD-Mentored Embedded Vision, Optical Sensitivity Arrays & Real-Time Obstacle Tracking',
+    title: 'Autonomous Obstacle-Avoiding & Object-Tracking Robot',
+    subtitle: 'MIT Training of Trainers (ToT) Mechatronics & Embedded Vision Cohort',
     metricBadges: [
       { text: '[COHORT RANK: #1]', variant: 'cyan' },
-      { text: '[INSTRUCTORS: 2 MIT PHDs]', variant: 'amber' },
-      { text: '[EVALUATION: TOP SCORE]', variant: 'cyan' },
+      { text: '[MENTORS: 2 MIT PHDs]', variant: 'amber' },
+      { text: '[YOUNGEST ADMITTED]', variant: 'cyan' },
     ],
-    tags: ['[MIT ToT Program]', '[Optical Sensing Arrays]', '[Color Recognition]', '[Autonomous Navigation]'],
-    description:
-      'Real-time optical feedback loops, multi-sensor color detection arrays, and dynamic obstacle avoidance platform engineered during the competitive MIT Training of Trainers (ToT) program.',
+    tags: ['[Optical Sensor Arrays]', '[Real-Time Tracking]', '[Closed-Loop Steering]', '[Embedded C++]'],
     telemetryBullets: [
       {
-        label: 'Selection & Ranking',
+        label: 'Cohort Performance',
         detail:
-          'Selected for the competitive MIT Training of Trainers (ToT) program; earned the #1 top evaluation score across the entire cohort as the youngest engineer admitted.',
+          'Earned the #1 overall evaluation score across the competitive MIT ToT engineering cohort as the youngest participant selected.',
       },
       {
-        label: 'Instruction Ratio',
+        label: 'Optical Feedback & Control',
         detail:
-          'Directly mentored by 2 MIT PhD researchers on embedded vision, optical sensitivity arrays, and real-time obstacle tracking.',
-      },
-      {
-        label: 'Sensor Array',
-        detail:
-          'Calibrated multi-sensor color detection arrays and high-frequency optical feedback loops for dynamic obstacle identification and avoidance.',
+          'Engineered under direct mentorship from two MIT PhD researchers, calibrating multi-channel color recognition arrays and low-latency obstacle avoidance loops.',
       },
     ],
     accent: 'cyan',
@@ -163,29 +238,23 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
     sysTag: '[SYS.NAV.03 // CYBER.INF]',
     coordTag: 'GRANT: $2,000+ // CEO',
     title: 'Autonomous Commercial Service Robot (Cyber Infinity)',
-    subtitle: 'Full-Lifecycle Systems Engineering: SolidWorks CAD Assemblies to Custom Embedded Firmware',
+    subtitle: 'Venture-Backed Hardware Startup // Mechanical CAD to Motor-Drive Firmware',
     metricBadges: [
       { text: '[ROLE: CO-FOUNDER & CEO]', variant: 'amber' },
-      { text: '[GRANT FUNDING: $2,000+]', variant: 'cyan' },
-      { text: '[PHASE: COMMERCIAL PILOT]', variant: 'amber' },
+      { text: '[NON-DILUTIVE GRANT: $2,000+]', variant: 'cyan' },
+      { text: '[STAGE: LIVE COMMERCIAL PILOT]', variant: 'amber' },
     ],
-    tags: ['[Co-Founder & CEO]', '[SolidWorks CAD]', '[Embedded Motor Firmware]', '[Indoor Navigation]'],
-    description:
-      'End-to-end commercial service robotics venture backed by non-dilutive engineering grant funding, spanning full-assembly mechanical CAD to live autonomous indoor deployment.',
+    tags: ['[SolidWorks Assemblies]', '[Custom Motor Firmware]', '[Indoor SLAM/Nav]', '[Hardware Venture]'],
     telemetryBullets: [
       {
-        label: 'Capital Secured',
-        detail: 'Awarded $2,000+ in competitive non-dilutive engineering grant funding.',
+        label: 'Electro-Mechanical Architecture',
+        detail:
+          'Designed full-chassis SolidWorks assemblies, drivetrain tolerances, and custom microcontroller motor-control firmware from a blank-sheet specification.',
       },
       {
-        label: 'Full-Lifecycle Engineering',
+        label: 'Commercial Field Deployment',
         detail:
-          'Led cross-functional systems engineering from blank-sheet SolidWorks CAD assemblies to custom embedded microcontroller motor-drive firmware.',
-      },
-      {
-        label: 'Deployment',
-        detail:
-          'Transitioned hardware from lab prototype into real-world autonomous indoor navigation and live commercial promoter deployment.',
+          'Secured $2,000+ in competitive engineering grant funding and deployed the robot for autonomous indoor navigation in live commercial environments.',
       },
     ],
     accent: 'amber',
@@ -195,24 +264,22 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
     sysTag: '[SYS.FAB.04 // GITA.LAB]',
     coordTag: 'MENTORED: 25+ // 3 CNC.FAB',
     title: 'Digital Fabrication & Hardware Prototyping (GITA)',
-    subtitle: '3-Axis Industrial CNC Milling, High-Power Laser Cutting & Precision Circuit Printing',
+    subtitle: 'Georgia’s Innovation & Technology Agency // Industrial FabLab Engineering',
     metricBadges: [
-      { text: '[MENTORED: 25+ UNDERGRADS]', variant: 'cyan' },
-      { text: '[FAB MACHINES: 3 INDUSTRIAL PLATFORMS]', variant: 'amber' },
+      { text: '[ADVISED: 25+ ENGINEERS]', variant: 'cyan' },
+      { text: '[MACHINING: CNC / LASER / PCB]', variant: 'amber' },
     ],
-    tags: ['[3-Axis CNC Milling]', '[Laser Cutting]', '[Circuit Printing]', '[CAD/CAM Mentorship]'],
-    description:
-      'High-precision mechanical and electronic hardware fabrication across 3 industrial platforms alongside technical design review mentorship for 25+ undergraduate engineers.',
+    tags: ['[3-Axis CNC CAM]', '[PCB Milling]', '[Laser Structural Fab]', '[DFM Reviews]'],
     telemetryBullets: [
       {
-        label: 'Mentorship Scope',
+        label: 'Design-for-Manufacturing (DFM)',
         detail:
-          'Guided and advised 25+ university engineering students through rapid prototyping, mechanical design reviews, and 2D/3D CAD tolerances.',
+          'Guided 25+ undergraduate engineering teams through CAD tolerance analysis, structural material selection, and rapid hardware iteration.',
       },
       {
-        label: 'Machining Execution',
+        label: 'Multi-Platform Machining',
         detail:
-          'Operated industrial 3-axis CNC mills, high-power laser cutters, and precision motherboard circuit printers to fabricate robotic and biomedical prototypes.',
+          'Generated CAM toolpaths and operated 3-axis industrial CNC mills, high-power laser cutters, and precision PCB circuit printers for robotics and biomedical hardware.',
       },
     ],
     accent: 'cyan',
@@ -222,24 +289,22 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
     sysTag: '[SYS.PROD.05 // BOG.AUTO]',
     coordTag: 'CYCLE: 30 DAYS // 100% PROD',
     title: 'Digital Banking Backend Automation (Bank of Georgia)',
-    subtitle: 'Enterprise Production Image Processing, Cropping & Rescaling Microservice',
+    subtitle: 'Enterprise Software Engineering // High-Throughput Media Processing Service',
     metricBadges: [
-      { text: '[CYCLE TIME: 1 MONTH]', variant: 'cyan' },
-      { text: '[STAGE: 100% PRODUCTION DEPLOYED]', variant: 'amber' },
+      { text: '[DELIVERY: 30 DAYS]', variant: 'cyan' },
+      { text: '[STATUS: 100% PRODUCTION]', variant: 'amber' },
     ],
-    tags: ['[Backend Automation]', '[Image Microservice]', '[100% Test Coverage]', '[Production Infra]'],
-    description:
-      'High-velocity automated media transformation microservice engineered, verified with full automated test coverage, and deployed to live banking production infrastructure within 30 days.',
+    tags: ['[Backend Microservice]', '[Automated Image Pipeline]', '[Unit & Integration Tests]', '[Enterprise CI/CD]'],
     telemetryBullets: [
       {
-        label: 'Velocity',
+        label: 'Production Pipeline',
         detail:
-          'Architected, tested, and shipped an automated image processing, cropping, and rescaling microservice to active production infrastructure within 30 days.',
+          'Architected and deployed an automated image transformation, smart cropping, and rescaling microservice into live banking infrastructure within a 30-day sprint.',
       },
       {
-        label: 'Reliability',
+        label: 'Enterprise Verification',
         detail:
-          'Built complete automated test coverage directly mapped to strict enterprise banking backend specifications.',
+          'Implemented comprehensive unit and regression test suites satisfying strict financial-grade reliability and latency standards.',
       },
     ],
     accent: 'cyan',
@@ -249,47 +314,44 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
 const HARDWARE_COMPUTE_GRID = [
   {
     sysTag: '[GRID.MOD.01 // AERO.CTRL]',
-    coordTag: 'GNC // 6-DOF',
-    category: 'AEROSPACE & CONTROL',
+    coordTag: 'GNC // DYNAMICS',
+    category: 'FLIGHT DYNAMICS & GNC',
     icon: Orbit,
     badges: [
-      { name: '6-DoF Simulation', code: 'RK4 // NUMERICAL' },
-      { name: 'CubeSat ADCS', code: '3-AXIS RW + MTQ' },
-      { name: 'PID Controllers', code: 'SUB-DEGREE LOCK' },
-      { name: 'Deep RL (PPO)', code: 'MEMORYLESS SAFE-MODE' },
-      { name: 'Monte Carlo Benchmarking', code: 'N=1,400 VALIDATED' },
-      { name: 'Orbit Integration (RK4)', code: 'LEO DISTURBANCE SIM' },
+      { name: '6-DoF Rigid-Body Dynamics', code: 'QUATERNION KINEMATICS' },
+      { name: 'Spacecraft Attitude Control', code: '3-AXIS RW + MTQ' },
+      { name: 'Classical & Hybrid Control', code: 'PID / GAIN SCHEDULING' },
+      { name: 'Reinforcement Learning', code: 'PPO / POLICY GRADIENT' },
+      { name: 'Numerical Integration', code: 'RK4 / ODE SOLVERS' },
+      { name: 'Stochastic Verification', code: 'MONTE CARLO DISPERSION' },
     ],
   },
   {
     sysTag: '[GRID.MOD.02 // EMBED.HW]',
     coordTag: 'MCU // FAB',
-    category: 'EMBEDDED & HARDWARE',
+    category: 'EMBEDDED & FABRICATION',
     icon: Cpu,
     badges: [
-      { name: 'Embedded Systems', code: 'BARE-METAL // RTOS' },
-      { name: 'ARM Cortex-M', code: '5.3 KB INT8 POLICY' },
-      { name: 'PCB Design', code: 'SCHEMATIC & MILLING' },
-      { name: 'CNC Machining', code: 'MULTI-AXIS CAM' },
-      { name: 'Laser Cutting', code: 'STRUCTURAL FAB' },
-      { name: 'Motor Controllers', code: 'CLOSED-LOOP ACTUATION' },
+      { name: 'ARM Cortex-M / Bare-Metal', code: 'INT8 QUANTIZED INFERENCE' },
+      { name: 'Closed-Loop Mechatronics', code: 'PWM / ENCODER FEEDBACK' },
+      { name: 'Optical & Sensor Arrays', code: 'LOW-LATENCY FILTERING' },
+      { name: 'PCB Prototyping', code: 'SCHEMATIC & MILLING' },
+      { name: '3-Axis CNC Machining', code: 'CAM TOOLPATHING' },
+      { name: 'Laser & Rapid Fab', code: 'STRUCTURAL ASSEMBLIES' },
     ],
   },
   {
     sysTag: '[GRID.MOD.03 // LANG.TOOLS]',
     coordTag: 'DEV // CAD',
-    category: 'LANGUAGES & TOOLS',
+    category: 'SOFTWARE & CAD WORKSTATION',
     icon: Terminal,
     badges: [
-      { name: 'Python', code: 'RL / NUMPY / GYMNASIUM' },
-      { name: 'C++', code: 'FLIGHT & EMBEDDED SW' },
-      { name: 'Arduino', code: 'RAPID MECHATRONICS' },
-      { name: 'React', code: 'HUD TELEMETRY / TS' },
-      { name: 'Git', code: 'VERSION CONTROL' },
-      { name: 'SolidWorks', code: '3D MECHANICAL CAD' },
-      { name: 'Fusion 360', code: 'CAD / CAM TOOLPATHS' },
-      { name: 'Arch Linux', code: 'PRIMARY WORKSTATION' },
-      { name: 'VS Code', code: 'DEV ENVIRONMENT' },
+      { name: 'Python', code: 'PYTORCH / NUMPY / GYMNASIUM' },
+      { name: 'C / C++', code: 'EMBEDDED & FLIGHT SW' },
+      { name: 'SolidWorks & Fusion 360', code: '3D CAD / CAM / DFM' },
+      { name: 'TypeScript & React', code: 'TELEMETRY VISUALIZATION' },
+      { name: 'Linux (Arch) & Git', code: 'DEVOPS & WORKSTATION' },
+      { name: 'Spoken Languages', code: 'KA / EN / RU / TR' },
     ],
   },
 ];
@@ -561,16 +623,16 @@ export function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-7 space-y-5">
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Dual-layer hybrid flight control architecture combining{' '}
+                  Hybrid spacecraft attitude control framework pairing{' '}
                   <span className="text-white font-medium">
                     classical PID for sub-degree (&lt;1.0°) quiet-sun science pointing
                   </span>{' '}
-                  and{' '}
+                  with{' '}
                   <span className="text-white font-medium">
-                    memoryless Deep Reinforcement Learning (PPO)
+                    stateless Proximal Policy Optimization (PPO)
                   </span>{' '}
-                  for autonomous extreme-radiation safe-mode recovery under Single-Event
-                  Functional Interrupts (SEFIs) and 1000x solar storm intensity spikes.
+                  for autonomous fault recovery when severe solar proton flux triggers
+                  Single-Event Functional Interrupts (SEFIs).
                 </p>
 
                 <ul className="space-y-3 text-sm text-slate-300">
@@ -589,67 +651,49 @@ export function App() {
                     </li>
                   ))}
                 </ul>
-
-                <div className="flex flex-wrap gap-2 font-mono text-xs pt-1">
-                  {[
-                    '[6-DoF Simulation]',
-                    '[CubeSat ADCS]',
-                    '[Deep RL / PPO]',
-                    '[Classical PID]',
-                    '[ARM Cortex-M // 5.3 KB]',
-                    '[Monte Carlo N=1,400]',
-                  ].map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 bg-[#060709] border border-slate-800 text-slate-400"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              {/* Right Column: Telemetry Readout & Dual-Layer Switching */}
+              {/* Right Column: 6-DoF Plant Parameters & Dual-Layer Switching */}
               <div className="lg:col-span-5 flex flex-col justify-between gap-4 bg-[#060709] border border-slate-800/90 p-5">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3 font-mono text-xs">
                   <span className="text-cyan-400 flex items-center gap-1.5">
                     <ShieldAlert className="w-4 h-4 text-[#f59e0b]" />
-                    <span>QUANTITATIVE TELEMETRY READOUT</span>
+                    <span>6-DOF PLANT &amp; DISTURBANCE SPEC</span>
                   </span>
-                  <span className="text-[#00f0ff]">[N=1,400]</span>
+                  <span className="text-[#00f0ff]">[RK4 // Δt=0.05s]</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 font-mono">
                   <div className="p-3 border border-[#00f0ff]/35 bg-[#090c12] shadow-[0_0_12px_rgba(0,240,255,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      SIMULATION TRAJECTORIES
+                      ORBITAL REGIME
                     </div>
-                    <div className="mt-1 text-base sm:text-lg font-bold text-[#00f0ff]">
-                      N=1,400 Runs
+                    <div className="mt-1 text-sm sm:text-base font-bold text-[#00f0ff]">
+                      550 km SSO LEO
                     </div>
                   </div>
                   <div className="p-3 border border-[#f59e0b]/40 bg-[#090c12] shadow-[0_0_12px_rgba(245,158,11,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      1000x SOLAR STORM BOUND
+                      ACTUATOR PLANT
                     </div>
-                    <div className="mt-1 text-base sm:text-lg font-bold text-[#f59e0b]">
-                      35.07° Max Err
+                    <div className="mt-1 text-sm sm:text-base font-bold text-[#f59e0b]">
+                      3-Axis RW + MTQ
                     </div>
                   </div>
                   <div className="p-3 border border-[#00f0ff]/35 bg-[#090c12] shadow-[0_0_12px_rgba(0,240,255,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      CORTEX-M BINARY SIZE
+                      RW TORQUE / MOM. CAP
                     </div>
-                    <div className="mt-1 text-base sm:text-lg font-bold text-[#00f0ff]">
-                      5.3 KB Footprint
+                    <div className="mt-1 text-sm sm:text-base font-bold text-[#00f0ff]">
+                      5.0 mN·m / 3.14 mN·m·s
                     </div>
                   </div>
                   <div className="p-3 border border-emerald-500/35 bg-[#090c12] shadow-[0_0_12px_rgba(16,185,129,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      RW CONTROL EFFORT
+                      RADIATION FAULT MODEL
                     </div>
-                    <div className="mt-1 text-base sm:text-lg font-bold text-emerald-400">
-                      -30% Net Effort
+                    <div className="mt-1 text-sm sm:text-base font-bold text-emerald-400">
+                      SEFI + Bit-Flip Flux
                     </div>
                   </div>
                 </div>
@@ -664,7 +708,7 @@ export function App() {
                         LAYER 1 // CLASSICAL PID
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        Sub-Degree (&lt;1.0°) Quiet-Sun Science Pointing (0.11° Median)
+                        Asymptotic steady-state error elimination (0.11° median lock)
                       </div>
                     </div>
                     <span className="px-2 py-0.5 text-[10px] bg-cyan-500/20 text-cyan-300">
@@ -677,7 +721,7 @@ export function App() {
                         LAYER 2 // MEMORYLESS DEEP RL (PPO)
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        35.07° Bounded Safe-Mode Under 1000x Solar Storm Spikes
+                        Stateless nonlinear rate damping &amp; SEFI upset recovery
                       </div>
                     </div>
                     <span className="px-2 py-0.5 text-[10px] bg-amber-500/20 text-amber-300">
@@ -917,10 +961,6 @@ export function App() {
                     </div>
                   </div>
 
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {proj.description}
-                  </p>
-
                   {/* Quantitative Telemetry Bullets */}
                   <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 pt-1">
                     {proj.telemetryBullets.map((item) => (
@@ -966,16 +1006,16 @@ export function App() {
           </div>
         </section>
 
-        {/* Academic & Leadership Section (Education & Academic Standing Telemetry) */}
+        {/* Academic & Leadership Section (Education, Rigorous Coursework & Languages) */}
         <section id="education" className="scroll-mt-24 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
             <div>
               <div className="font-mono text-xs text-[#00f0ff] tracking-widest uppercase flex items-center gap-2">
                 <GraduationCap className="w-3.5 h-3.5" />
-                <span>SECTION 02 // EDUCATION &amp; ACADEMIC STANDING TELEMETRY</span>
+                <span>SECTION 02 // EDUCATION, RIGOROUS COURSEWORK &amp; LEADERSHIP</span>
               </div>
               <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Education, Institutional Rankings &amp; Cohort Leadership
+                Education, Core Engineering Coursework &amp; Cohort Leadership
               </h2>
             </div>
             <div className="font-mono text-xs text-slate-400">
@@ -990,8 +1030,9 @@ export function App() {
             accent="cyan"
             className="p-6 sm:p-8"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              <div className="lg:col-span-7 space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Institution & Rigorous Technical Coursework Matrix */}
+              <div className="lg:col-span-7 space-y-5">
                 {/* Rankings HUD Badges in Education Card Header */}
                 <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
                   <span className="px-3 py-1.5 bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] font-semibold tracking-wider shadow-[0_0_14px_rgba(0,240,255,0.22),inset_0_0_8px_rgba(0,240,255,0.08)]">
@@ -1001,7 +1042,7 @@ export function App() {
                     [NATIONAL RANK: #1 IN TURKEY]
                   </span>
                   <span className="px-2.5 py-1 bg-cyan-950/30 border border-cyan-500/40 text-cyan-300 text-[11px]">
-                    [B.SC. AEROSPACE ENGINEERING]
+                    [100% ENGLISH-MEDIUM CURRICULUM]
                   </span>
                 </div>
 
@@ -1010,48 +1051,113 @@ export function App() {
                     Middle East Technical University (ODTÜ), Department of Aerospace Engineering
                   </h3>
                   <p className="mt-1 font-mono text-xs sm:text-sm text-cyan-300">
-                    B.Sc. in Aerospace Engineering — Ankara, Turkey
+                    B.Sc. in Aerospace Engineering — Ankara, Turkey (2024–Present)
                   </p>
                 </div>
 
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  Focusing on spacecraft attitude determination and control systems (ADCS),
-                  6-DoF orbital mechanics, numerical trajectory simulation, and autonomous
-                  flight control architectures at Turkey&apos;s #1 ranked technical university.
-                </p>
+                {/* Rigorous Completed Coursework Grid */}
+                <div className="space-y-3 pt-1">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-2 font-mono text-[11px]">
+                    <span className="text-[#00f0ff] uppercase tracking-wider font-semibold">
+                      SELECTED RIGOROUS ENGINEERING &amp; MATHEMATICS COURSEWORK
+                    </span>
+                    <span className="text-slate-400">[COMPLETED AT METU]</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {RIGOROUS_COURSES.map((course) => (
+                      <div
+                        key={course.code}
+                        className={`p-3 bg-[#060709] border transition-colors ${
+                          course.highlight
+                            ? 'border-cyan-500/40 hover:border-[#00f0ff]'
+                            : 'border-slate-800/90 hover:border-cyan-500/35'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2 font-mono">
+                          <span
+                            className={`text-xs font-bold ${
+                              course.highlight ? 'text-[#00f0ff]' : 'text-cyan-300'
+                            }`}
+                          >
+                            [{course.code}]
+                          </span>
+                          <span className="text-[10px] text-slate-500 truncate">
+                            {course.domain}
+                          </span>
+                        </div>
+                        <div className="mt-1 text-xs sm:text-sm font-medium text-slate-200">
+                          {course.title}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="lg:col-span-5 space-y-3 font-mono text-xs">
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2 flex items-center justify-between">
-                  <span>LEADERSHIP &amp; COHORT SCALE</span>
-                  <span className="text-[#00f0ff]">2024–2026</span>
+              {/* Right Column: Leadership & Spoken Languages Readout */}
+              <div className="lg:col-span-5 space-y-5 font-mono text-xs">
+                <div className="space-y-3">
+                  <div className="text-[11px] text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2 flex items-center justify-between">
+                    <span>LEADERSHIP &amp; COHORT SCALE</span>
+                    <span className="text-[#00f0ff]">2024–2026</span>
+                  </div>
+
+                  <div className="p-3.5 bg-[#060709] border border-[#00f0ff]/40 shadow-[0_0_12px_rgba(0,240,255,0.08)]">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[#00f0ff] font-semibold">
+                        &gt; COHORT REPRESENTATIVE
+                      </span>
+                      <span className="px-2 py-0.5 bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] text-[10px]">
+                        [2024–2025]
+                      </span>
+                    </div>
+                    <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
+                      Elected Representative of the 1st-Year Aerospace Engineering Cohort, acting as the primary academic liaison between students and department faculty.
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 bg-[#060709] border border-[#f59e0b]/40 shadow-[0_0_12px_rgba(245,158,11,0.08)]">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[#f59e0b] font-semibold">
+                        &gt; LEAD COORDINATOR // INTL. INTEGRATION
+                      </span>
+                      <span className="px-2 py-0.5 bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#f59e0b] text-[10px]">
+                        [2025–2026]
+                      </span>
+                    </div>
+                    <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
+                      Lead Coordinator directing onboarding logistics and cross-cultural integration for incoming international engineering students.
+                    </div>
+                  </div>
                 </div>
 
-                <div className="p-3.5 bg-[#060709] border border-[#00f0ff]/40 shadow-[0_0_12px_rgba(0,240,255,0.08)]">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[#00f0ff] font-semibold">
-                      &gt; COHORT REPRESENTATIVE
-                    </span>
-                    <span className="px-2 py-0.5 bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] text-[10px]">
-                      [2024–2025]
-                    </span>
+                {/* Compact Spoken Languages Readout */}
+                <div className="space-y-2.5 pt-1">
+                  <div className="text-[11px] text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2 flex items-center justify-between">
+                    <span>SPOKEN LANGUAGES // MULTICULTURAL COMM.</span>
+                    <span className="text-emerald-400">[4 LANGUAGES]</span>
                   </div>
-                  <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
-                    Elected Representative of the 1st-Year Aerospace Engineering Cohort (2024–2025).
-                  </div>
-                </div>
 
-                <div className="p-3.5 bg-[#060709] border border-[#f59e0b]/40 shadow-[0_0_12px_rgba(245,158,11,0.08)]">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[#f59e0b] font-semibold">
-                      &gt; LEAD COORDINATOR // INTL. INTEGRATION
-                    </span>
-                    <span className="px-2 py-0.5 bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#f59e0b] text-[10px]">
-                      [2025–2026]
-                    </span>
-                  </div>
-                  <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
-                    Lead Coordinator organizing incoming international student logistics and integration programs (2025–2026).
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {SPOKEN_LANGUAGES.map((item) => (
+                      <div
+                        key={item.language}
+                        className="p-2.5 bg-[#060709] border border-slate-800/90 hover:border-cyan-500/40 transition-colors"
+                      >
+                        <div className="flex items-center justify-between gap-1.5">
+                          <span className="text-xs font-bold text-white">
+                            {item.language}
+                          </span>
+                          <span className="px-1.5 py-0.5 bg-cyan-950/40 border border-cyan-500/30 text-[10px] text-[#00f0ff]">
+                            {item.level}
+                          </span>
+                        </div>
+                        <div className="mt-1 text-[11px] text-slate-400 font-sans">
+                          {item.note}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
