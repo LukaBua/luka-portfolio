@@ -27,15 +27,26 @@ import fig1MonteCarlo from './assets/figures/fig1_monte_carlo_sweeps.png';
 import fig2SefiRecovery from './assets/figures/fig2_sefi_recovery_trajectory.png';
 import fig3ErrorDist from './assets/figures/fig3_error_distributions.png';
 
+interface TelemetryBullet {
+  label: string;
+  detail: string;
+}
+
+interface MetricBadge {
+  text: string;
+  variant?: 'cyan' | 'amber';
+}
+
 interface ProjectItem {
   id: string;
   sysTag: string;
   coordTag: string;
   title: string;
   subtitle: string;
+  metricBadges: MetricBadge[];
   tags: string[];
   description: string;
-  highlights: string[];
+  telemetryBullets: TelemetryBullet[];
   accent?: 'cyan' | 'amber';
 }
 
@@ -49,6 +60,37 @@ interface BenchmarkFigure {
   metrics: string[];
 }
 
+const ADCS_METRIC_BADGES: MetricBadge[] = [
+  { text: '[SIM RUNS: N=1,400]', variant: 'cyan' },
+  { text: '[MAX FLUX: 1000x SOLAR STORM]', variant: 'amber' },
+  { text: '[ERROR BOUND: 35.07°]', variant: 'amber' },
+  { text: '[MODEL FOOTPRINT: 5.3 KB]', variant: 'cyan' },
+  { text: '[EFFORT REDUCTION: -30%]', variant: 'cyan' },
+];
+
+const ADCS_TELEMETRY_BULLETS: TelemetryBullet[] = [
+  {
+    label: 'Sample Size & Verification',
+    detail:
+      'Conducted 1,400 distinct Monte Carlo 6-DoF simulation trajectories benchmarking a memoryless PPO agent against classical PID under extreme simulated radiation environments.',
+  },
+  {
+    label: 'Radiation Tolerance',
+    detail:
+      'Bounded worst-case pointing errors to 35.07° under 1000x solar storm intensity spikes where traditional integral terms diverged, preventing catastrophic loss of mission.',
+  },
+  {
+    label: 'Embedded Optimization',
+    detail:
+      'Quantized the deep policy network weights down to a 5.3 KB binary footprint compatible with bare-metal ARM Cortex-M microcontrollers.',
+  },
+  {
+    label: 'Actuator Efficiency',
+    detail:
+      'Achieved a 30% net reduction in total reaction wheel control effort alongside sub-degree (<1.0°) science pointing during quiet-sun nominal states.',
+  },
+];
+
 const BENCHMARK_FIGURES: BenchmarkFigure[] = [
   {
     id: 'fig-01',
@@ -58,7 +100,7 @@ const BENCHMARK_FIGURES: BenchmarkFigure[] = [
     subtitle:
       'Settling time (s), mean pointing error (deg), and reaction wheel control effort (N·m·s) across logarithmic radiation intensity scales (0 to 10³).',
     src: fig1MonteCarlo,
-    metrics: ['N=1,400 FLIGHTS', '35.07° BOUND @ 10³x', '-46.8% MEAN ERR'],
+    metrics: ['[SIM RUNS: N=1,400]', '[ERROR BOUND: 35.07°]', '[-46.8% MEAN ERR]'],
   },
   {
     id: 'fig-02',
@@ -68,7 +110,7 @@ const BENCHMARK_FIGURES: BenchmarkFigure[] = [
     subtitle:
       '4-channel time-domain flight profile: attitude error (deg), body angular rate (deg/s), motor torque vs. 5.0 mN·m stall limit, and wheel momentum (mN·m·s).',
     src: fig2SefiRecovery,
-    metrics: ['SEFI RECOVERY', '5.0 mN·m STALL CAP', '3.14 mN·m·s MOM.'],
+    metrics: ['[MAX FLUX: 1000x]', '[5.0 mN·m STALL CAP]', '[3.14 mN·m·s MOM.]'],
   },
   {
     id: 'fig-03',
@@ -78,7 +120,7 @@ const BENCHMARK_FIGURES: BenchmarkFigure[] = [
     subtitle:
       'Sub-degree (< 1.0°) science pointing acquisition success rate [%] and log-scale median final attitude error (deg) comparing Classical PID and Deep RL (PPO).',
     src: fig3ErrorDist,
-    metrics: ['100% LOCK (0x–5x)', '0.11° MEDIAN ERR', 'DUAL-LAYER HANDOFF'],
+    metrics: ['[100% LOCK (0x–5x)]', '[0.11° MEDIAN ERR]', '[EFFORT: -30%]'],
   },
 ];
 
@@ -86,16 +128,33 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
   {
     id: 'mit-tot-robot',
     sysTag: '[SYS.ROBO.02 // MIT.TOT]',
-    coordTag: 'EVAL: TOP IN COHORT // CV.OPT',
+    coordTag: 'RANK: #1 // 2 MIT PHDs',
     title: 'Autonomous Obstacle-Avoiding & Object-Tracking Robot (MIT ToT Program)',
-    subtitle: 'MIT PhD-Instructed Autonomous Robotics & Optical Sensing System',
-    tags: ['[MIT ToT Program]', '[Optical Sensing]', '[Color Recognition]', '[Autonomous Nav]'],
+    subtitle: 'MIT PhD-Mentored Embedded Vision, Optical Sensitivity Arrays & Real-Time Obstacle Tracking',
+    metricBadges: [
+      { text: '[COHORT RANK: #1]', variant: 'cyan' },
+      { text: '[INSTRUCTORS: 2 MIT PHDs]', variant: 'amber' },
+      { text: '[EVALUATION: TOP SCORE]', variant: 'cyan' },
+    ],
+    tags: ['[MIT ToT Program]', '[Optical Sensing Arrays]', '[Color Recognition]', '[Autonomous Navigation]'],
     description:
-      'Real-time optical sensing, color recognition arrays, and autonomous navigation machine developed under direct instruction from MIT PhD instructors. Top evaluation score in cohort.',
-    highlights: [
-      'Integrated calibrated optical sensing and real-time color recognition arrays for closed-loop target acquisition and tracking.',
-      'Architected low-latency autonomous obstacle avoidance state machines operating without external localization infrastructure.',
-      'Awarded top overall technical evaluation score in the cohort under direct review by MIT PhD instructors.',
+      'Real-time optical feedback loops, multi-sensor color detection arrays, and dynamic obstacle avoidance platform engineered during the competitive MIT Training of Trainers (ToT) program.',
+    telemetryBullets: [
+      {
+        label: 'Selection & Ranking',
+        detail:
+          'Selected for the competitive MIT Training of Trainers (ToT) program; earned the #1 top evaluation score across the entire cohort as the youngest engineer admitted.',
+      },
+      {
+        label: 'Instruction Ratio',
+        detail:
+          'Directly mentored by 2 MIT PhD researchers on embedded vision, optical sensitivity arrays, and real-time obstacle tracking.',
+      },
+      {
+        label: 'Sensor Array',
+        detail:
+          'Calibrated multi-sensor color detection arrays and high-frequency optical feedback loops for dynamic obstacle identification and avoidance.',
+      },
     ],
     accent: 'cyan',
   },
@@ -103,44 +162,85 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
     id: 'cyber-infinity',
     sysTag: '[SYS.NAV.03 // CYBER.INF]',
     coordTag: 'GRANT: $2,000+ // CEO',
-    title: 'Commercial Autonomous Service Robot (Cyber Infinity — Co-Founder & CEO)',
-    subtitle: 'End-to-End Mechanical CAD, Embedded Control Loops & Commercial Deployment',
-    tags: ['[Co-Founder & CEO]', '[SolidWorks]', '[Embedded Control]', '[Autonomous Robotics]'],
+    title: 'Autonomous Commercial Service Robot (Cyber Infinity)',
+    subtitle: 'Full-Lifecycle Systems Engineering: SolidWorks CAD Assemblies to Custom Embedded Firmware',
+    metricBadges: [
+      { text: '[ROLE: CO-FOUNDER & CEO]', variant: 'amber' },
+      { text: '[GRANT FUNDING: $2,000+]', variant: 'cyan' },
+      { text: '[PHASE: COMMERCIAL PILOT]', variant: 'amber' },
+    ],
+    tags: ['[Co-Founder & CEO]', '[SolidWorks CAD]', '[Embedded Motor Firmware]', '[Indoor Navigation]'],
     description:
-      'Complete end-to-end hardware-software lifecycle: SolidWorks mechanical design, embedded control loops, autonomous obstacle avoidance, $2,000+ grant funding, real commercial deployment.',
-    highlights: [
-      'Directed full hardware-software lifecycle from multi-assembly SolidWorks mechanical CAD to custom embedded motor control loops.',
-      'Secured $2,000+ in competitive innovation grant funding and deployed autonomous obstacle-avoiding units in live commercial venues.',
+      'End-to-end commercial service robotics venture backed by non-dilutive engineering grant funding, spanning full-assembly mechanical CAD to live autonomous indoor deployment.',
+    telemetryBullets: [
+      {
+        label: 'Capital Secured',
+        detail: 'Awarded $2,000+ in competitive non-dilutive engineering grant funding.',
+      },
+      {
+        label: 'Full-Lifecycle Engineering',
+        detail:
+          'Led cross-functional systems engineering from blank-sheet SolidWorks CAD assemblies to custom embedded microcontroller motor-drive firmware.',
+      },
+      {
+        label: 'Deployment',
+        detail:
+          'Transitioned hardware from lab prototype into real-world autonomous indoor navigation and live commercial promoter deployment.',
+      },
     ],
     accent: 'amber',
   },
   {
-    id: 'bank-of-georgia',
-    sysTag: '[SYS.PROD.04 // BOG.AUTO]',
-    coordTag: 'ENV: PRODUCTION // PIPELINE',
-    title: 'Digital Banking Production Automation (Bank of Georgia)',
-    subtitle: 'High-Reliability Backend Image Transformation & Optimization Infrastructure',
-    tags: ['[Backend Automation]', '[Image Pipelines]', '[Production Infra]', '[CI/CD]'],
+    id: 'gita-intern',
+    sysTag: '[SYS.FAB.04 // GITA.LAB]',
+    coordTag: 'MENTORED: 25+ // 3 CNC.FAB',
+    title: 'Digital Fabrication & Hardware Prototyping (GITA)',
+    subtitle: '3-Axis Industrial CNC Milling, High-Power Laser Cutting & Precision Circuit Printing',
+    metricBadges: [
+      { text: '[MENTORED: 25+ UNDERGRADS]', variant: 'cyan' },
+      { text: '[FAB MACHINES: 3 INDUSTRIAL PLATFORMS]', variant: 'amber' },
+    ],
+    tags: ['[3-Axis CNC Milling]', '[Laser Cutting]', '[Circuit Printing]', '[CAD/CAM Mentorship]'],
     description:
-      'Backend automated image transformation and optimization pipelines pushed directly to production infrastructure.',
-    highlights: [
-      'Engineered deterministic image cropping, scaling, and optimization micro-pipelines integrated into production banking backends.',
-      'Delivered automated media processing workflows meeting strict enterprise reliability and latency requirements.',
+      'High-precision mechanical and electronic hardware fabrication across 3 industrial platforms alongside technical design review mentorship for 25+ undergraduate engineers.',
+    telemetryBullets: [
+      {
+        label: 'Mentorship Scope',
+        detail:
+          'Guided and advised 25+ university engineering students through rapid prototyping, mechanical design reviews, and 2D/3D CAD tolerances.',
+      },
+      {
+        label: 'Machining Execution',
+        detail:
+          'Operated industrial 3-axis CNC mills, high-power laser cutters, and precision motherboard circuit printers to fabricate robotic and biomedical prototypes.',
+      },
     ],
     accent: 'cyan',
   },
   {
-    id: 'gita-intern',
-    sysTag: '[SYS.FAB.05 // GITA.LAB]',
-    coordTag: 'MENTORED: 25+ ENGS // CNC.PCB',
-    title: 'Advanced Fabrication & Prototyping (GITA Intern)',
-    subtitle: 'Industrial CNC Machining, Laser Cutting & Mechatronic PCB Prototyping',
-    tags: ['[CNC Machining]', '[Laser Cutting]', '[PCB Prototyping]', '[Engineering Mentorship]'],
+    id: 'bank-of-georgia',
+    sysTag: '[SYS.PROD.05 // BOG.AUTO]',
+    coordTag: 'CYCLE: 30 DAYS // 100% PROD',
+    title: 'Digital Banking Backend Automation (Bank of Georgia)',
+    subtitle: 'Enterprise Production Image Processing, Cropping & Rescaling Microservice',
+    metricBadges: [
+      { text: '[CYCLE TIME: 1 MONTH]', variant: 'cyan' },
+      { text: '[STAGE: 100% PRODUCTION DEPLOYED]', variant: 'amber' },
+    ],
+    tags: ['[Backend Automation]', '[Image Microservice]', '[100% Test Coverage]', '[Production Infra]'],
     description:
-      'Industrial CNC machining, laser cutting, PCB prototyping for autonomous robotic and medical devices; mentored 25+ student engineers.',
-    highlights: [
-      'Executed precision CNC machining, structural laser cutting, and custom PCB prototyping for autonomous robotics and medical hardware.',
-      'Mentored 25+ student engineers on CAD-to-CAM fabrication workflows, hardware debugging, and rapid prototyping.',
+      'High-velocity automated media transformation microservice engineered, verified with full automated test coverage, and deployed to live banking production infrastructure within 30 days.',
+    telemetryBullets: [
+      {
+        label: 'Velocity',
+        detail:
+          'Architected, tested, and shipped an automated image processing, cropping, and rescaling microservice to active production infrastructure within 30 days.',
+      },
+      {
+        label: 'Reliability',
+        detail:
+          'Built complete automated test coverage directly mapped to strict enterprise banking backend specifications.',
+      },
     ],
     accent: 'cyan',
   },
@@ -404,7 +504,7 @@ export function App() {
             </div>
           </div>
 
-          {/* 1. Flagship Research Card: Radiation-Tolerant CubeSat Attitude Control (ADCS) */}
+          {/* 1. Flagship Research Card: Radiation-Tolerant CubeSat ADCS (Flight Dynamics & Deep RL) */}
           <CadWireframeBox
             sysTag="[SYS.ADCS.01 // 6-DOF.SIM]"
             coordTag="MC: N=1,400 // CORTEX-M: 5.3KB"
@@ -412,28 +512,85 @@ export function App() {
             accent="cyan"
             className="p-6 sm:p-8 space-y-8"
           >
-            {/* Top Overview & Architecture Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-7 space-y-5">
+            {/* Card Header Telemetry Strip: High-Contrast HUD Metric Pills */}
+            <div className="border-b border-slate-800/90 pb-5 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2 py-0.5 bg-[#00f0ff]/15 border border-[#00f0ff]/50 font-mono text-[11px] text-[#00f0ff] uppercase">
-                    FLAGSHIP RESEARCH // SATELLITE ADCS
+                  <span className="px-2.5 py-0.5 bg-[#00f0ff]/15 border border-[#00f0ff]/60 font-mono text-[11px] font-semibold text-[#00f0ff] uppercase shadow-[0_0_12px_rgba(0,240,255,0.2)]">
+                    FLAGSHIP RESEARCH // FLIGHT DYNAMICS &amp; DEEP RL
                   </span>
-                  <span className="px-2 py-0.5 bg-amber-500/15 border border-amber-500/40 font-mono text-[11px] text-amber-300 uppercase">
+                  <span className="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/50 font-mono text-[11px] font-semibold text-[#f59e0b] uppercase shadow-[0_0_12px_rgba(245,158,11,0.18)]">
                     1000x SOLAR STORM SAFE-MODE
                   </span>
                 </div>
+                <span className="font-mono text-[11px] text-slate-400">
+                  TELEMETRY VERIFIED // 6-DOF MONTE CARLO
+                </span>
+              </div>
 
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
-                    Radiation-Tolerant CubeSat Attitude Control (ADCS)
-                  </h3>
-                  <p className="mt-1 font-mono text-xs sm:text-sm text-cyan-300/90">
-                    Dual-Layer Hybrid Controller: Classical PID + Memoryless Deep RL (PPO)
-                  </p>
-                </div>
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                  Radiation-Tolerant CubeSat ADCS (Flight Dynamics &amp; Deep RL)
+                </h3>
+                <p className="mt-1 font-mono text-xs sm:text-sm text-cyan-300/90">
+                  Dual-Layer Hybrid Flight Controller: Classical PID + Memoryless Deep RL (PPO)
+                </p>
+              </div>
 
-                <div className="flex flex-wrap gap-2 font-mono text-xs">
+              {/* Prominent Monospace Telemetry Readout Pills with Faint Glowing Borders */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-1 font-mono text-xs">
+                {ADCS_METRIC_BADGES.map((badge) => {
+                  const isAmber = badge.variant === 'amber';
+                  return (
+                    <span
+                      key={badge.text}
+                      className={`px-3 py-1.5 font-semibold tracking-wider transition-all ${
+                        isAmber
+                          ? 'bg-[#f59e0b]/12 border border-[#f59e0b]/60 text-[#f59e0b] shadow-[0_0_14px_rgba(245,158,11,0.22),inset_0_0_8px_rgba(245,158,11,0.08)]'
+                          : 'bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] shadow-[0_0_14px_rgba(0,240,255,0.22),inset_0_0_8px_rgba(0,240,255,0.08)]'
+                      }`}
+                    >
+                      {badge.text}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Top Overview & Architecture Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-7 space-y-5">
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  Dual-layer hybrid flight control architecture combining{' '}
+                  <span className="text-white font-medium">
+                    classical PID for sub-degree (&lt;1.0°) quiet-sun science pointing
+                  </span>{' '}
+                  and{' '}
+                  <span className="text-white font-medium">
+                    memoryless Deep Reinforcement Learning (PPO)
+                  </span>{' '}
+                  for autonomous extreme-radiation safe-mode recovery under Single-Event
+                  Functional Interrupts (SEFIs) and 1000x solar storm intensity spikes.
+                </p>
+
+                <ul className="space-y-3 text-sm text-slate-300">
+                  {ADCS_TELEMETRY_BULLETS.map((item) => (
+                    <li
+                      key={item.label}
+                      className="flex items-start gap-2.5 p-3 bg-[#060709]/90 border border-slate-800/80 hover:border-cyan-500/40 transition-colors"
+                    >
+                      <span className="font-mono text-[#00f0ff] font-bold mt-0.5">&gt;</span>
+                      <span>
+                        <strong className="text-white font-mono text-xs uppercase tracking-wider mr-1.5">
+                          {item.label}:
+                        </strong>
+                        <span className="text-slate-300">{item.detail}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-wrap gap-2 font-mono text-xs pt-1">
                   {[
                     '[6-DoF Simulation]',
                     '[CubeSat ADCS]',
@@ -444,53 +601,12 @@ export function App() {
                   ].map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 bg-[#060709] border border-slate-700/80 text-slate-300"
+                      className="px-2.5 py-1 bg-[#060709] border border-slate-800 text-slate-400"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Dual-layer hybrid flight control architecture combining{' '}
-                  <span className="text-white font-medium">
-                    classical PID for sub-degree fine science pointing
-                  </span>{' '}
-                  and{' '}
-                  <span className="text-white font-medium">
-                    memoryless Deep Reinforcement Learning (PPO)
-                  </span>{' '}
-                  for autonomous extreme-radiation safe-mode recovery. Validated across a
-                  1,400-flight Monte Carlo benchmark with Single-Event Functional Interrupts
-                  (SEFIs), sensor bit-flips, and 1000x solar storm disturbance torques.
-                </p>
-
-                <ul className="space-y-2 text-sm text-slate-400">
-                  <li className="flex items-start gap-2.5">
-                    <span className="font-mono text-[#00f0ff] mt-0.5">&gt;</span>
-                    <span>
-                      <strong>1,400-Flight Monte Carlo Validation:</strong> Swept across 7
-                      radiation intensity scales (0x nominal LEO up to 1000x extreme solar
-                      proton events) using custom RK4 6-DoF rigid-body dynamics.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="font-mono text-[#00f0ff] mt-0.5">&gt;</span>
-                    <span>
-                      <strong>35.07° Bounded Error under 1000x Solar Storm:</strong> Memoryless
-                      PPO eliminates stateful integral windup during radiation-induced register
-                      upsets, cutting mean pointing dispersion by 46.8% compared to PID.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="font-mono text-[#00f0ff] mt-0.5">&gt;</span>
-                    <span>
-                      <strong>5.3 KB Quantized ARM Cortex-M Footprint &amp; -30% Effort:</strong>{' '}
-                      Deployed ultra-compact neural policy weights suitable for radiation-hardened
-                      microcontrollers while reducing reaction wheel actuator effort by 30%.
-                    </span>
-                  </li>
-                </ul>
               </div>
 
               {/* Right Column: Telemetry Readout & Dual-Layer Switching */}
@@ -498,42 +614,42 @@ export function App() {
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3 font-mono text-xs">
                   <span className="text-cyan-400 flex items-center gap-1.5">
                     <ShieldAlert className="w-4 h-4 text-[#f59e0b]" />
-                    <span>KEY FLIGHT BENCHMARK TELEMETRY</span>
+                    <span>QUANTITATIVE TELEMETRY READOUT</span>
                   </span>
-                  <span className="text-slate-500">MC N=1,400</span>
+                  <span className="text-[#00f0ff]">[N=1,400]</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 font-mono">
-                  <div className="p-3 border border-slate-800/90 bg-[#090c12]">
+                  <div className="p-3 border border-[#00f0ff]/35 bg-[#090c12] shadow-[0_0_12px_rgba(0,240,255,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      MONTE CARLO VALIDATION
+                      SIMULATION TRAJECTORIES
                     </div>
                     <div className="mt-1 text-base sm:text-lg font-bold text-[#00f0ff]">
-                      1,400 Flights
+                      N=1,400 Runs
                     </div>
                   </div>
-                  <div className="p-3 border border-slate-800/90 bg-[#090c12]">
+                  <div className="p-3 border border-[#f59e0b]/40 bg-[#090c12] shadow-[0_0_12px_rgba(245,158,11,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      1000x SOLAR STORM
+                      1000x SOLAR STORM BOUND
                     </div>
                     <div className="mt-1 text-base sm:text-lg font-bold text-[#f59e0b]">
-                      35.07° Bounded
+                      35.07° Max Err
                     </div>
                   </div>
-                  <div className="p-3 border border-slate-800/90 bg-[#090c12]">
+                  <div className="p-3 border border-[#00f0ff]/35 bg-[#090c12] shadow-[0_0_12px_rgba(0,240,255,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      CORTEX-M FOOTPRINT
+                      CORTEX-M BINARY SIZE
                     </div>
                     <div className="mt-1 text-base sm:text-lg font-bold text-[#00f0ff]">
-                      5.3 KB Quantized
+                      5.3 KB Footprint
                     </div>
                   </div>
-                  <div className="p-3 border border-slate-800/90 bg-[#090c12]">
+                  <div className="p-3 border border-emerald-500/35 bg-[#090c12] shadow-[0_0_12px_rgba(16,185,129,0.08)]">
                     <div className="text-[10px] text-slate-400 uppercase">
-                      ACTUATOR EFFORT
+                      RW CONTROL EFFORT
                     </div>
                     <div className="mt-1 text-base sm:text-lg font-bold text-emerald-400">
-                      -30% Reduction
+                      -30% Net Effort
                     </div>
                   </div>
                 </div>
@@ -548,7 +664,7 @@ export function App() {
                         LAYER 1 // CLASSICAL PID
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        Sub-Degree Fine Science Pointing (0.11° Median Error)
+                        Sub-Degree (&lt;1.0°) Quiet-Sun Science Pointing (0.11° Median)
                       </div>
                     </div>
                     <span className="px-2 py-0.5 text-[10px] bg-cyan-500/20 text-cyan-300">
@@ -561,7 +677,7 @@ export function App() {
                         LAYER 2 // MEMORYLESS DEEP RL (PPO)
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        Autonomous Extreme-Radiation Safe-Mode Recovery
+                        35.07° Bounded Safe-Mode Under 1000x Solar Storm Spikes
                       </div>
                     </div>
                     <span className="px-2 py-0.5 text-[10px] bg-amber-500/20 text-amber-300">
@@ -770,42 +886,79 @@ export function App() {
                 className="p-6 flex flex-col justify-between"
               >
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-[#00f0ff] transition-colors">
-                      {proj.title}
-                    </h3>
-                    <p className="mt-1 font-mono text-xs text-slate-400">
-                      {proj.subtitle}
-                    </p>
-                  </div>
+                  {/* Card Header: Title + High-Contrast Monospace Telemetry Readouts */}
+                  <div className="border-b border-slate-800/90 pb-4 space-y-3">
+                    <div>
+                      <h3 className="text-xl font-bold text-white group-hover:text-[#00f0ff] transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="mt-1 font-mono text-xs text-slate-400">
+                        {proj.subtitle}
+                      </p>
+                    </div>
 
-                  <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
-                    {proj.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 bg-[#060709] border border-slate-800 text-cyan-300/90"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    {/* Top Metric Badges (Faint Glowing Cyan / Amber Borders) */}
+                    <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                      {proj.metricBadges.map((badge) => {
+                        const isAmber = badge.variant === 'amber';
+                        return (
+                          <span
+                            key={badge.text}
+                            className={`px-2.5 py-1 font-semibold tracking-wider ${
+                              isAmber
+                                ? 'bg-[#f59e0b]/12 border border-[#f59e0b]/60 text-[#f59e0b] shadow-[0_0_12px_rgba(245,158,11,0.2),inset_0_0_6px_rgba(245,158,11,0.06)]'
+                                : 'bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.2),inset_0_0_6px_rgba(0,240,255,0.06)]'
+                            }`}
+                          >
+                            {badge.text}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <p className="text-slate-300 text-sm leading-relaxed">
                     {proj.description}
                   </p>
 
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-slate-400 pt-1">
-                    {proj.highlights.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="font-mono text-[#00f0ff]">&gt;</span>
-                        <span>{item}</span>
+                  {/* Quantitative Telemetry Bullets */}
+                  <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 pt-1">
+                    {proj.telemetryBullets.map((item) => (
+                      <li
+                        key={item.label}
+                        className="flex items-start gap-2.5 p-2.5 bg-[#060709]/85 border border-slate-800/80"
+                      >
+                        <span
+                          className={`font-mono font-bold mt-0.5 ${
+                            proj.accent === 'amber' ? 'text-[#f59e0b]' : 'text-[#00f0ff]'
+                          }`}
+                        >
+                          &gt;
+                        </span>
+                        <span>
+                          <strong className="text-white font-mono text-[11px] uppercase tracking-wider mr-1.5">
+                            {item.label}:
+                          </strong>
+                          <span className="text-slate-300">{item.detail}</span>
+                        </span>
                       </li>
                     ))}
                   </ul>
+
+                  <div className="flex flex-wrap gap-1.5 font-mono text-[11px] pt-1">
+                    {proj.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 bg-[#060709] border border-slate-800 text-slate-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-6 pt-3 border-t border-slate-800/80 flex items-center justify-between font-mono text-[11px] text-slate-500">
-                  <span>STATUS: VERIFIED // FIELD DEPLOYED</span>
+                  <span>STATUS: TELEMETRY VERIFIED // FIELD DEPLOYED</span>
                   <span className="text-cyan-400">{proj.sysTag}</span>
                 </div>
               </CadWireframeBox>
@@ -813,64 +966,92 @@ export function App() {
           </div>
         </section>
 
-        {/* Academic & Leadership Section (Strictly Scoped to METU / ODTÜ B.Sc. Aerospace Engineering) */}
+        {/* Academic & Leadership Section (Education & Academic Standing Telemetry) */}
         <section id="education" className="scroll-mt-24 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
             <div>
               <div className="font-mono text-xs text-[#00f0ff] tracking-widest uppercase flex items-center gap-2">
                 <GraduationCap className="w-3.5 h-3.5" />
-                <span>SECTION 02 // ACADEMIC TRAINING &amp; LEADERSHIP</span>
+                <span>SECTION 02 // EDUCATION &amp; ACADEMIC STANDING TELEMETRY</span>
               </div>
               <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Education &amp; University Leadership
+                Education, Institutional Rankings &amp; Cohort Leadership
               </h2>
             </div>
             <div className="font-mono text-xs text-slate-400">
-              INSTITUTION // MIDDLE EAST TECHNICAL UNIVERSITY (ODTÜ)
+              RANKING // [QS EUROPE: #124] // [NATIONAL RANK: #1 IN TURKEY]
             </div>
           </div>
 
           <CadWireframeBox
             sysTag="[EDU.METU.01 // B.SC.AERO]"
-            coordTag="ANKARA, TR // ODTÜ"
+            coordTag="QS EUROPE: #124 // RANK: #1 TR"
             inspectMode={inspectMode}
             accent="cyan"
             className="p-6 sm:p-8"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              <div className="lg:col-span-7 space-y-3">
-                <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-cyan-500/10 border border-cyan-500/40 font-mono text-[11px] text-[#00f0ff]">
-                  <span>UNDERGRADUATE DEGREE // ACTIVE</span>
+              <div className="lg:col-span-7 space-y-4">
+                {/* Rankings HUD Badges in Education Card Header */}
+                <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                  <span className="px-3 py-1.5 bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] font-semibold tracking-wider shadow-[0_0_14px_rgba(0,240,255,0.22),inset_0_0_8px_rgba(0,240,255,0.08)]">
+                    [QS EUROPE: #124]
+                  </span>
+                  <span className="px-3 py-1.5 bg-[#f59e0b]/12 border border-[#f59e0b]/60 text-[#f59e0b] font-semibold tracking-wider shadow-[0_0_14px_rgba(245,158,11,0.22),inset_0_0_8px_rgba(245,158,11,0.08)]">
+                    [NATIONAL RANK: #1 IN TURKEY]
+                  </span>
+                  <span className="px-2.5 py-1 bg-cyan-950/30 border border-cyan-500/40 text-cyan-300 text-[11px]">
+                    [B.SC. AEROSPACE ENGINEERING]
+                  </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">
-                  B.Sc. in Aerospace Engineering
-                </h3>
-                <p className="font-mono text-xs sm:text-sm text-cyan-300">
-                  Middle East Technical University (ODTÜ) — Ankara, Turkey
-                </p>
+
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">
+                    Middle East Technical University (ODTÜ), Department of Aerospace Engineering
+                  </h3>
+                  <p className="mt-1 font-mono text-xs sm:text-sm text-cyan-300">
+                    B.Sc. in Aerospace Engineering — Ankara, Turkey
+                  </p>
+                </div>
+
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  Focusing on spacecraft attitude dynamics, orbital mechanics, numerical
-                  simulation, and autonomous flight control architectures.
+                  Focusing on spacecraft attitude determination and control systems (ADCS),
+                  6-DoF orbital mechanics, numerical trajectory simulation, and autonomous
+                  flight control architectures at Turkey&apos;s #1 ranked technical university.
                 </p>
               </div>
 
-              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 font-mono text-xs">
-                <div className="p-3.5 bg-[#060709] border border-slate-800/90">
-                  <div className="text-[#00f0ff] font-semibold">
-                    &gt; 1ST-YEAR STUDENT REPRESENTATIVE
+              <div className="lg:col-span-5 space-y-3 font-mono text-xs">
+                <div className="text-[11px] text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2 flex items-center justify-between">
+                  <span>LEADERSHIP &amp; COHORT SCALE</span>
+                  <span className="text-[#00f0ff]">2024–2026</span>
+                </div>
+
+                <div className="p-3.5 bg-[#060709] border border-[#00f0ff]/40 shadow-[0_0_12px_rgba(0,240,255,0.08)]">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[#00f0ff] font-semibold">
+                      &gt; COHORT REPRESENTATIVE
+                    </span>
+                    <span className="px-2 py-0.5 bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] text-[10px]">
+                      [2024–2025]
+                    </span>
                   </div>
-                  <div className="mt-1 text-slate-400 text-[11px] font-sans">
-                    Elected cohort liaison coordinating academic feedback and departmental
-                    student representation within METU Aerospace Engineering.
+                  <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
+                    Elected Representative of the 1st-Year Aerospace Engineering Cohort (2024–2025).
                   </div>
                 </div>
-                <div className="p-3.5 bg-[#060709] border border-slate-800/90">
-                  <div className="text-[#f59e0b] font-semibold">
-                    &gt; INTERNATIONAL STUDENT ORIENTATION ORGANIZER
+
+                <div className="p-3.5 bg-[#060709] border border-[#f59e0b]/40 shadow-[0_0_12px_rgba(245,158,11,0.08)]">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[#f59e0b] font-semibold">
+                      &gt; LEAD COORDINATOR // INTL. INTEGRATION
+                    </span>
+                    <span className="px-2 py-0.5 bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#f59e0b] text-[10px]">
+                      [2025–2026]
+                    </span>
                   </div>
-                  <div className="mt-1 text-slate-400 text-[11px] font-sans">
-                    Organized campus onboarding, technical briefings, and cross-cultural
-                    integration programs for incoming international engineering students at ODTÜ.
+                  <div className="mt-1.5 text-slate-300 text-xs font-sans leading-relaxed">
+                    Lead Coordinator organizing incoming international student logistics and integration programs (2025–2026).
                   </div>
                 </div>
               </div>
