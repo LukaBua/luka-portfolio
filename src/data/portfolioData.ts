@@ -32,7 +32,7 @@ export const PROFILE = {
   outsideProjectsNote:
     'Outside coursework, I founded a commercial robotics venture (Cyber Infinity) and pursue independent spacecraft ADCS research and NASA Space Apps astrometry software.',
   nextGoalNote:
-    'Targeting 2027 European Aerospace Internships and Spacecraft Systems Engineering roles across ADCS, thermal control, GNC simulation, and flight-grade software.',
+    'Ready to work on any aerospace-related project, internship, or mission worldwide across flight hardware, thermal control, autonomous GNC, and space systems engineering.',
 };
 
 export const SKILLS_LIST: SkillEntry[] = [

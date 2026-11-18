@@ -439,31 +439,31 @@ export const ClosingPage: React.FC<{ onPrintPdf: () => void }> = ({ onPrintPdf }
         <div className="folio-grid-closing gap-8 items-center">
           <div className="space-y-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1d6291]/25 border border-[#88a2bd]/45 font-mono text-[10.5px] text-[#b1bdca] uppercase tracking-widest">
-              <span>2027 EU INTERNSHIPS &amp; SPACECRAFT SYSTEMS</span>
+              <span>AEROSPACE OPPORTUNITIES &amp; COLLABORATIONS</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-[#e0ddd8] leading-[1.08]">
-              Ready to contribute to flight hardware, thermal control &amp; autonomous GNC.
+              Ready to work on any Aerospace-Related Project or Internship.
             </h2>
 
             <p className="text-sm sm:text-base text-[#b1bdca] leading-relaxed max-w-xl">
-              Thank you for reviewing this 9-page engineering dossier. I bring hands-on mechanical
-              fabrication, numerical spacecraft simulation, and production software delivery—with
-              full clarity on where designs succeeded and where constraints exposed limits.
+              Thank you for reviewing this 9-page engineering dossier. Whether tackling spacecraft
+              subsystems, embedded flight software, thermal modeling, or autonomous control,
+              I am prepared to step in immediately and deliver disciplined, verified engineering work.
             </p>
 
             <div className="folio-grid-3 gap-3 pt-1 font-mono text-[10.5px]">
               <div className="p-3 border border-[#718fa7]/40 bg-[#090807]/85">
-                <div className="text-[#88a2bd] font-bold">01. HARDWARE</div>
-                <div className="text-[#e0ddd8] mt-1">CAD, CNC/PCB Fab &amp; 3U CubeSat Thermal</div>
+                <div className="text-[#88a2bd] font-bold">AVAILABILITY</div>
+                <div className="text-[#e0ddd8] mt-1">Open for immediate, seasonal, and upcoming cycles</div>
               </div>
               <div className="p-3 border border-[#718fa7]/40 bg-[#090807]/85">
-                <div className="text-[#88a2bd] font-bold">02. SIMULATION</div>
-                <div className="text-[#e0ddd8] mt-1">6-DoF Attitude Dynamics &amp; Astrometry</div>
+                <div className="text-[#88a2bd] font-bold">MOBILITY</div>
+                <div className="text-[#e0ddd8] mt-1">Flexible relocation, on-site, or remote aerospace roles</div>
               </div>
               <div className="p-3 border border-[#718fa7]/40 bg-[#090807]/85">
-                <div className="text-[#88a2bd] font-bold">03. DELIVERY</div>
-                <div className="text-[#e0ddd8] mt-1">Python Backends &amp; Embedded C/C++</div>
+                <div className="text-[#88a2bd] font-bold">VERIFICATION</div>
+                <div className="text-[#e0ddd8] mt-1">All repositories, data, and manuscripts open for review</div>
               </div>
             </div>
           </div>
