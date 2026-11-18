@@ -20,57 +20,26 @@ import {
 import { BoidCanvas } from './components/BoidCanvas';
 import { CadWireframeBox } from './components/CadWireframeBox';
 import { OrbitalGimbal } from './components/OrbitalGimbal';
+import { ShroudXShowcase } from './components/ShroudXShowcase';
 import { TelemetryDock } from './components/TelemetryDock';
 import { TelemetryPlot } from './components/TelemetryPlot';
+import {
+  HudFigureFrame,
+  MetricBadgeStrip,
+  TelemetryBulletList,
+} from './components/TelemetryPrimitives';
+import type {
+  BenchmarkFigure,
+  CourseItem,
+  MetricBadge,
+  ProjectItem,
+  SpokenLanguageItem,
+  TelemetryBullet,
+} from './types';
 
 import fig1MonteCarlo from './assets/figures/fig1_monte_carlo_sweeps.png';
 import fig2SefiRecovery from './assets/figures/fig2_sefi_recovery_trajectory.png';
 import fig3ErrorDist from './assets/figures/fig3_error_distributions.png';
-
-interface TelemetryBullet {
-  label: string;
-  detail: string;
-}
-
-interface MetricBadge {
-  text: string;
-  variant?: 'cyan' | 'amber';
-}
-
-interface ProjectItem {
-  id: string;
-  sysTag: string;
-  coordTag: string;
-  title: string;
-  subtitle: string;
-  metricBadges: MetricBadge[];
-  tags: string[];
-  telemetryBullets: TelemetryBullet[];
-  accent?: 'cyan' | 'amber';
-}
-
-interface CourseItem {
-  code: string;
-  title: string;
-  domain: string;
-  highlight?: boolean;
-}
-
-interface SpokenLanguageItem {
-  language: string;
-  level: string;
-  note: string;
-}
-
-interface BenchmarkFigure {
-  id: string;
-  sysTag: string;
-  coordTag: string;
-  captionHeader: string;
-  subtitle: string;
-  src: string;
-  metrics: string[];
-}
 
 const ADCS_METRIC_BADGES: MetricBadge[] = [
   { text: '[SIM RUNS: N=1,400]', variant: 'cyan' },
@@ -209,7 +178,7 @@ const BENCHMARK_FIGURES: BenchmarkFigure[] = [
 const SECONDARY_PROJECTS: ProjectItem[] = [
   {
     id: 'mit-tot-robot',
-    sysTag: '[SYS.ROBO.02 // MIT.TOT]',
+    sysTag: '[SYS.ROBO.03 // MIT.TOT]',
     coordTag: 'RANK: #1 // 2 MIT PHDs',
     title: 'Autonomous Obstacle-Avoiding & Object-Tracking Robot',
     subtitle: 'MIT Training of Trainers (ToT) Mechatronics & Embedded Vision Cohort',
@@ -235,7 +204,7 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
   },
   {
     id: 'cyber-infinity',
-    sysTag: '[SYS.NAV.03 // CYBER.INF]',
+    sysTag: '[SYS.NAV.04 // CYBER.INF]',
     coordTag: 'GRANT: $2,000+ // CEO',
     title: 'Autonomous Commercial Service Robot (Cyber Infinity)',
     subtitle: 'Venture-Backed Hardware Startup // Mechanical CAD to Motor-Drive Firmware',
@@ -261,7 +230,7 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
   },
   {
     id: 'gita-intern',
-    sysTag: '[SYS.FAB.04 // GITA.LAB]',
+    sysTag: '[SYS.FAB.05 // GITA.LAB]',
     coordTag: 'MENTORED: 25+ // 3 CNC.FAB',
     title: 'Digital Fabrication & Hardware Prototyping (GITA)',
     subtitle: 'Georgia’s Innovation & Technology Agency // Industrial FabLab Engineering',
@@ -286,7 +255,7 @@ const SECONDARY_PROJECTS: ProjectItem[] = [
   },
   {
     id: 'bank-of-georgia',
-    sysTag: '[SYS.PROD.05 // BOG.AUTO]',
+    sysTag: '[SYS.PROD.06 // BOG.AUTO]',
     coordTag: 'CYCLE: 30 DAYS // 100% PROD',
     title: 'Digital Banking Backend Automation (Bank of Georgia)',
     subtitle: 'Enterprise Software Engineering // High-Throughput Media Processing Service',
@@ -324,6 +293,7 @@ const HARDWARE_COMPUTE_GRID = [
       { name: 'Reinforcement Learning', code: 'PPO / POLICY GRADIENT' },
       { name: 'Numerical Integration', code: 'RK4 / ODE SOLVERS' },
       { name: 'Stochastic Verification', code: 'MONTE CARLO DISPERSION' },
+      { name: 'Space Astrometry & WCS', code: 'SPHEREX / GAIA DR3 / WLS' },
     ],
   },
   {
@@ -346,11 +316,12 @@ const HARDWARE_COMPUTE_GRID = [
     category: 'SOFTWARE & CAD WORKSTATION',
     icon: Terminal,
     badges: [
-      { name: 'Python', code: 'PYTORCH / NUMPY / GYMNASIUM' },
+      { name: 'Python', code: 'PYTORCH / ASTROPY / FASTAPI' },
       { name: 'C / C++', code: 'EMBEDDED & FLIGHT SW' },
       { name: 'SolidWorks & Fusion 360', code: '3D CAD / CAM / DFM' },
-      { name: 'TypeScript & React', code: 'TELEMETRY VISUALIZATION' },
-      { name: 'Linux (Arch) & Git', code: 'DEVOPS & WORKSTATION' },
+      { name: 'TypeScript & React', code: 'REACT 19 / VITE / THREE.JS' },
+      { name: 'Docker, Linux (Arch) & Git', code: 'CONTAINERS & DEVOPS' },
+      { name: 'IRSA SIA2/TAP & FITS', code: 'ASTRODATA PIPELINES' },
       { name: 'Spoken Languages', code: 'KA / EN / RU / TR' },
     ],
   },
@@ -410,10 +381,11 @@ export function App() {
           <nav className="hidden lg:flex items-center gap-1 font-mono text-xs">
             {[
               { label: '[Hero]', href: '#systems' },
-              { label: '[ADCS Research]', href: '#research' },
+              { label: '[ADCS]', href: '#research' },
+              { label: '[ShroudX]', href: '#shroudx' },
               { label: '[Systems]', href: '#engineering' },
               { label: '[Education]', href: '#education' },
-              { label: '[Compute Grid]', href: '#stack' },
+              { label: '[Stack]', href: '#stack' },
               { label: '[Contact]', href: '#contact' },
             ].map((item) => (
               <a
@@ -557,7 +529,7 @@ export function App() {
                 <span>SECTION 01 // FEATURED RESEARCH &amp; SYSTEMS ENGINEERING</span>
               </div>
               <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Radiation-Tolerant CubeSat Attitude Control &amp; Autonomous Systems
+                Radiation-Tolerant CubeSat ADCS, Space Astrometry &amp; Autonomous Systems
               </h2>
             </div>
             <div className="font-mono text-xs text-slate-400">
@@ -600,23 +572,7 @@ export function App() {
               </div>
 
               {/* Prominent Monospace Telemetry Readout Pills with Faint Glowing Borders */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-1 font-mono text-xs">
-                {ADCS_METRIC_BADGES.map((badge) => {
-                  const isAmber = badge.variant === 'amber';
-                  return (
-                    <span
-                      key={badge.text}
-                      className={`px-3 py-1.5 font-semibold tracking-wider transition-all ${
-                        isAmber
-                          ? 'bg-[#f59e0b]/12 border border-[#f59e0b]/60 text-[#f59e0b] shadow-[0_0_14px_rgba(245,158,11,0.22),inset_0_0_8px_rgba(245,158,11,0.08)]'
-                          : 'bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] shadow-[0_0_14px_rgba(0,240,255,0.22),inset_0_0_8px_rgba(0,240,255,0.08)]'
-                      }`}
-                    >
-                      {badge.text}
-                    </span>
-                  );
-                })}
-              </div>
+              <MetricBadgeStrip badges={ADCS_METRIC_BADGES} />
             </div>
 
             {/* Top Overview & Architecture Grid */}
@@ -635,22 +591,7 @@ export function App() {
                   Single-Event Functional Interrupts (SEFIs).
                 </p>
 
-                <ul className="space-y-3 text-sm text-slate-300">
-                  {ADCS_TELEMETRY_BULLETS.map((item) => (
-                    <li
-                      key={item.label}
-                      className="flex items-start gap-2.5 p-3 bg-[#060709]/90 border border-slate-800/80 hover:border-cyan-500/40 transition-colors"
-                    >
-                      <span className="font-mono text-[#00f0ff] font-bold mt-0.5">&gt;</span>
-                      <span>
-                        <strong className="text-white font-mono text-xs uppercase tracking-wider mr-1.5">
-                          {item.label}:
-                        </strong>
-                        <span className="text-slate-300">{item.detail}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <TelemetryBulletList items={ADCS_TELEMETRY_BULLETS} accent="cyan" />
               </div>
 
               {/* Right Column: 6-DoF Plant Parameters & Dual-Layer Switching */}
@@ -806,27 +747,13 @@ export function App() {
                       </div>
 
                       {/* Technical Image Frame with CAD Midpoint Ticks & Dark-Field Blending */}
-                      <div
+                      <HudFigureFrame
+                        src={fig.src}
+                        alt={fig.captionHeader}
+                        darkFieldFilter={darkFieldFilter}
+                        maxHeightClass="max-h-[340px]"
                         onClick={() => setExpandedFigure(fig)}
-                        className={`relative overflow-hidden border border-cyan-500/25 p-2 transition-all cursor-zoom-in ${
-                          darkFieldFilter ? 'bg-[#060709]' : 'bg-white'
-                        }`}
-                      >
-                        {/* CAD Midpoint Tick Marks on Image Frame */}
-                        <span className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3 h-[2px] bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-[2px] bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-3 bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-3 bg-[#00f0ff]/70 z-10" />
-
-                        <img
-                          src={fig.src}
-                          alt={fig.captionHeader}
-                          loading="lazy"
-                          className={`w-full h-auto object-contain max-h-[340px] mx-auto transition-all duration-300 ${
-                            darkFieldFilter ? 'hud-figure-darkfield' : ''
-                          }`}
-                        />
-                      </div>
+                      />
                     </div>
 
                     {/* Footer Metric Tags */}
@@ -888,26 +815,13 @@ export function App() {
                     </div>
 
                     <div className="lg:col-span-8">
-                      <div
+                      <HudFigureFrame
+                        src={fig.src}
+                        alt={fig.captionHeader}
+                        darkFieldFilter={darkFieldFilter}
+                        maxHeightClass="max-h-[260px]"
                         onClick={() => setExpandedFigure(fig)}
-                        className={`relative overflow-hidden border border-cyan-500/25 p-2 transition-all cursor-zoom-in ${
-                          darkFieldFilter ? 'bg-[#060709]' : 'bg-white'
-                        }`}
-                      >
-                        <span className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3 h-[2px] bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-[2px] bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-3 bg-[#00f0ff]/70 z-10" />
-                        <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-3 bg-[#00f0ff]/70 z-10" />
-
-                        <img
-                          src={fig.src}
-                          alt={fig.captionHeader}
-                          loading="lazy"
-                          className={`w-full h-auto object-contain max-h-[260px] mx-auto transition-all duration-300 ${
-                            darkFieldFilter ? 'hud-figure-darkfield' : ''
-                          }`}
-                        />
-                      </div>
+                      />
                     </div>
                   </div>
                 </CadWireframeBox>
@@ -915,7 +829,15 @@ export function App() {
             </div>
           </CadWireframeBox>
 
-          {/* 2–5. Secondary Systems & Engineering Experience Grid */}
+          {/* 2. Featured Space Astrometry & Full-Stack Pipeline: ShroudX (NASA Space Apps 2026) */}
+          <ShroudXShowcase
+            inspectMode={inspectMode}
+            darkFieldFilter={darkFieldFilter}
+            onToggleDarkField={() => setDarkFieldFilter((prev) => !prev)}
+            onExpandFigure={setExpandedFigure}
+          />
+
+          {/* 3–6. Secondary Systems & Engineering Experience Grid */}
           <div
             id="engineering"
             className="scroll-mt-24 grid grid-cols-1 md:grid-cols-2 gap-6 pt-2"
@@ -942,48 +864,15 @@ export function App() {
                     </div>
 
                     {/* Top Metric Badges (Faint Glowing Cyan / Amber Borders) */}
-                    <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                      {proj.metricBadges.map((badge) => {
-                        const isAmber = badge.variant === 'amber';
-                        return (
-                          <span
-                            key={badge.text}
-                            className={`px-2.5 py-1 font-semibold tracking-wider ${
-                              isAmber
-                                ? 'bg-[#f59e0b]/12 border border-[#f59e0b]/60 text-[#f59e0b] shadow-[0_0_12px_rgba(245,158,11,0.2),inset_0_0_6px_rgba(245,158,11,0.06)]'
-                                : 'bg-[#00f0ff]/12 border border-[#00f0ff]/60 text-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.2),inset_0_0_6px_rgba(0,240,255,0.06)]'
-                            }`}
-                          >
-                            {badge.text}
-                          </span>
-                        );
-                      })}
-                    </div>
+                    <MetricBadgeStrip badges={proj.metricBadges} compact />
                   </div>
 
                   {/* Quantitative Telemetry Bullets */}
-                  <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 pt-1">
-                    {proj.telemetryBullets.map((item) => (
-                      <li
-                        key={item.label}
-                        className="flex items-start gap-2.5 p-2.5 bg-[#060709]/85 border border-slate-800/80"
-                      >
-                        <span
-                          className={`font-mono font-bold mt-0.5 ${
-                            proj.accent === 'amber' ? 'text-[#f59e0b]' : 'text-[#00f0ff]'
-                          }`}
-                        >
-                          &gt;
-                        </span>
-                        <span>
-                          <strong className="text-white font-mono text-[11px] uppercase tracking-wider mr-1.5">
-                            {item.label}:
-                          </strong>
-                          <span className="text-slate-300">{item.detail}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                  <TelemetryBulletList
+                    items={proj.telemetryBullets}
+                    accent={proj.accent}
+                    compact
+                  />
 
                   <div className="flex flex-wrap gap-1.5 font-mono text-[11px] pt-1">
                     {proj.tags.map((tag) => (
@@ -1234,7 +1123,7 @@ export function App() {
         {/* E. Footer */}
         <footer id="contact" className="scroll-mt-24 pt-4">
           <CadWireframeBox
-            sysTag="[SYS.COMM.06 // TERMINAL.FOOTER]"
+            sysTag="[SYS.COMM.07 // TERMINAL.FOOTER]"
             coordTag="UPLINK // ANKARA, TR"
             inspectMode={inspectMode}
             accent="cyan"
@@ -1273,13 +1162,13 @@ export function App() {
                 </a>
 
                 <a
-                  href="https://github.com/lukabuachidze"
+                  href="https://github.com/LukaBua"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 px-3.5 py-2.5 bg-[#060709] border border-slate-800 hover:border-[#00f0ff] text-slate-200 hover:text-[#00f0ff] transition-all"
                 >
                   <GitBranch className="w-3.5 h-3.5 text-[#00f0ff]" />
-                  <span>GitHub</span>
+                  <span>github.com/LukaBua</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
 
