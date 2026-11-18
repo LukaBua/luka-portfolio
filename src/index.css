@@ -78,7 +78,7 @@
 .folio-grid-4,
 .folio-grid-about,
 .folio-grid-project,
-.folio-grid-learning,
+.folio-grid-exp-row,
 .folio-grid-closing,
 .folio-grid-lostmarks {
   display: grid;
@@ -97,13 +97,13 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .folio-grid-about {
-    grid-template-columns: 4fr 8fr;
+    grid-template-columns: 5fr 7fr;
   }
   .folio-grid-project {
-    grid-template-columns: 7fr 5fr;
+    grid-template-columns: 6fr 6fr;
   }
-  .folio-grid-learning {
-    grid-template-columns: 4fr 8fr;
+  .folio-grid-exp-row {
+    grid-template-columns: 3.6fr 5.4fr 3fr;
   }
   .folio-grid-closing {
     grid-template-columns: 7fr 5fr;
@@ -162,11 +162,15 @@
   .folio-grid-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
-  .folio-grid-about,
-  .folio-grid-learning {
-    grid-template-columns: 4fr 8fr !important;
+  .folio-grid-about {
+    grid-template-columns: 5fr 7fr !important;
   }
-  .folio-grid-project,
+  .folio-grid-project {
+    grid-template-columns: 6fr 6fr !important;
+  }
+  .folio-grid-exp-row {
+    grid-template-columns: 3.6fr 5.4fr 3fr !important;
+  }
   .folio-grid-closing {
     grid-template-columns: 7fr 5fr !important;
   }

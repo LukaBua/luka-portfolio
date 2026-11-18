@@ -17,23 +17,23 @@ const BOX_STYLES = [
     label: '01 // PROBLEM',
     headerBg: '#3e3b32',
     headerFg: '#e0ddd8',
-    cardBg: 'rgba(198, 183, 162, 0.24)',
-    border: '#6f6856',
+    cardBg: '#e0ddd8',
+    border: '#a0947e',
   },
   {
     key: 'approach' as const,
     label: '02 // APPROACH',
     headerBg: '#1d6291',
     headerFg: '#e0ddd8',
-    cardBg: 'rgba(177, 189, 202, 0.28)',
-    border: '#1d6291',
+    cardBg: '#e0ddd8',
+    border: '#718fa7',
   },
   {
     key: 'result' as const,
     label: '03 // RESULT',
     headerBg: '#718fa7',
     headerFg: '#090807',
-    cardBg: 'rgba(136, 162, 189, 0.22)',
+    cardBg: '#e0ddd8',
     border: '#718fa7',
   },
   {
@@ -41,18 +41,19 @@ const BOX_STYLES = [
     label: '04 // LEARNT',
     headerBg: '#6f6856',
     headerFg: '#e0ddd8',
-    cardBg: 'rgba(160, 148, 126, 0.22)',
+    cardBg: '#e0ddd8',
     border: '#a0947e',
   },
 ];
 
-/** Consistent 4-box engineering case-study page with visual evidence & optional "Where I Lost Marks". */
+/** Consistent 4-box engineering case-study page with balanced 50/50 media & optional "Where I Lost Marks". */
 export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
   project,
   enableInteractiveAdcs = false,
   onInspectMedia,
 }) => {
   const [interactiveMode, setInteractiveMode] = useState(false);
+  const twoMediaStack = project.media.length === 2;
 
   return (
     <FolioShell
@@ -63,12 +64,12 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
     >
       <div className="flex-1 min-h-0 flex flex-col gap-3">
         {/* Top Metrics Strip + Optional Repo / Interactive Toggle */}
-        <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 shrink-0">
           <div className="flex flex-wrap items-center gap-1.5">
             {project.metricsStrip.map((m) => (
               <div
                 key={m.label}
-                className="px-2.5 py-1 bg-[#c6b7a2]/45 border border-[#a0947e] flex items-center gap-1.5 font-mono text-[10px]"
+                className="px-2.5 py-1 bg-[#c6b7a2]/40 border border-[#a0947e] flex items-center gap-1.5 font-mono text-[10px]"
               >
                 <span className="text-[#6f6856]">{m.label}:</span>
                 <span className="font-bold text-[#090807]">{m.value}</span>
@@ -107,11 +108,11 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
           </div>
         </div>
 
-        {/* Main 12-Column Body: Left 4 Boxes (+ Lost Marks) | Right Evidence Gallery */}
-        <div className="flex-1 min-h-0 folio-grid-project gap-3">
-          {/* Left Column: Four-Box Framework + Optional Highlighted Lost-Marks Box */}
-          <div className="flex flex-col justify-between gap-2 min-h-0">
-            <div className="folio-grid-2 gap-2 flex-1 min-h-0">
+        {/* Balanced 6/6 Split: Left 4 Boxes (+ Lost Marks) | Right Evidence Media */}
+        <div className="flex-1 min-h-0 folio-grid-project gap-3.5">
+          {/* Left Column */}
+          <div className="flex flex-col justify-between gap-2.5 min-h-0">
+            <div className="folio-grid-2 gap-2.5 flex-1 min-h-0">
               {BOX_STYLES.map((style) => {
                 const box = project.boxes[style.key];
                 return (
@@ -124,16 +125,16 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
                     }}
                   >
                     <div
-                      className="px-2.5 py-1 font-mono text-[9.5px] font-bold tracking-wider flex items-center justify-between shrink-0"
+                      className="px-2.5 py-1 font-mono text-[9.5px] font-bold tracking-wider shrink-0"
                       style={{ backgroundColor: style.headerBg, color: style.headerFg }}
                     >
-                      <span>{style.label}</span>
+                      {style.label}
                     </div>
-                    <div className="p-2 space-y-1 text-[10.5px] leading-[1.32] text-[#090807] overflow-hidden">
-                      <div className="font-semibold text-[#090807]">{box.headline}</div>
+                    <div className="p-2.5 flex-1 flex flex-col justify-center space-y-1.5 text-[10.5px] leading-[1.35] text-[#090807]">
+                      <div className="font-bold text-[#090807]">{box.headline}</div>
                       <ul className="space-y-1 text-[#3e3b32]">
                         {box.points.map((pt) => (
-                          <li key={pt} className="flex items-start gap-1">
+                          <li key={pt} className="flex items-start gap-1.5">
                             <span className="font-mono font-bold text-[#1d6291] mt-[1px]">›</span>
                             <span>{pt}</span>
                           </li>
@@ -145,14 +146,13 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
               })}
             </div>
 
-            {/* Highlighted "Where I Lost Marks" Box (Page 6) */}
             {project.lostMarks && (
-              <div className="border-2 border-[#493716] bg-[#c6b7a2]/55 overflow-hidden shrink-0">
+              <div className="border-2 border-[#493716] bg-[#c6b7a2]/50 overflow-hidden shrink-0">
                 <div className="px-2.5 py-1 bg-[#341f10] text-[#e0ddd8] font-mono text-[9.5px] font-bold tracking-wider flex items-center gap-1.5">
                   <AlertTriangle className="w-3 h-3 text-[#c6b7a2]" />
                   <span>{project.lostMarks.title}</span>
                 </div>
-                <div className="px-2.5 py-1.5 folio-grid-lostmarks gap-2 text-[10px] leading-[1.3] text-[#090807]">
+                <div className="px-2.5 py-2 folio-grid-lostmarks gap-2 text-[10px] leading-[1.32] text-[#090807]">
                   {project.lostMarks.points.map((pt, idx) => (
                     <div key={pt} className="flex items-start gap-1">
                       <span className="font-mono font-bold text-[#493716] shrink-0">
@@ -166,7 +166,7 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
             )}
           </div>
 
-          {/* Right Column: Verified Project Media OR Interactive ADCS Lab */}
+          {/* Right Column: Verified Visuals OR Interactive 3D Gimbal/Plot */}
           <div className="flex flex-col gap-2 min-h-0">
             {enableInteractiveAdcs && interactiveMode ? (
               <div className="no-print flex-1 flex flex-col gap-2 min-h-0">
@@ -174,9 +174,15 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
                 <TelemetryPlot />
               </div>
             ) : (
-              <div className="flex-1 min-h-0 folio-grid-2 gap-2">
+              <div
+                className={`flex-1 min-h-0 gap-2.5 ${
+                  twoMediaStack ? 'flex flex-col' : 'folio-grid-2'
+                }`}
+              >
                 {project.media.map((item, idx) => {
-                  const isLead = idx === 0;
+                  const isLead = !twoMediaStack && idx === 0;
+                  const isCover = item.fit === 'cover';
+                  const isLight = item.surface === 'light';
                   return (
                     <button
                       key={item.id}
@@ -188,11 +194,11 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
                           src: item.src,
                         })
                       }
-                      className={`group text-left border border-[#a0947e] bg-[#090807] overflow-hidden flex flex-col cursor-zoom-in transition-colors hover:border-[#1d6291] min-h-0 ${
-                        isLead ? 'md:col-span-2 folio-span-2' : ''
-                      }`}
+                      className={`group text-left border border-[#a0947e] overflow-hidden flex flex-col cursor-zoom-in transition-colors hover:border-[#1d6291] min-h-0 ${
+                        twoMediaStack ? 'flex-1' : isLead ? 'md:col-span-2 folio-span-2' : ''
+                      } ${isLight ? 'bg-white' : 'bg-[#090807]'}`}
                     >
-                      <div className="px-2.5 py-1 bg-[#3e3b32]/90 border-b border-[#6f6856]/40 flex items-center justify-between gap-2 font-mono text-[9px] text-[#e0ddd8] shrink-0">
+                      <div className="px-2.5 py-1 bg-[#3e3b32] border-b border-[#6f6856]/40 flex items-center justify-between gap-2 font-mono text-[9px] text-[#e0ddd8] shrink-0">
                         <span className="truncate font-semibold">{item.title}</span>
                         <span className="inline-flex items-center gap-1 text-[#b1bdca] shrink-0">
                           <span>{item.badge}</span>
@@ -200,20 +206,20 @@ export const ProjectFourBoxPage: React.FC<ProjectFourBoxPageProps> = ({
                         </span>
                       </div>
                       <div
-                        className={`relative flex-1 flex items-center justify-center p-1 overflow-hidden ${
-                          item.surface === 'light' ? 'bg-white' : 'bg-[#090807]'
-                        } ${isLead ? 'min-h-[150px]' : 'min-h-[140px]'}`}
+                        className={`relative flex-1 min-h-0 flex items-center justify-center overflow-hidden ${
+                          isLight ? 'bg-white p-1.5' : isCover ? 'bg-[#090807] p-0' : 'bg-[#090807] p-1'
+                        }`}
                       >
                         <img
                           src={item.src}
                           alt={item.title}
                           loading="lazy"
-                          className={`w-full h-full object-contain ${
-                            isLead ? 'max-h-[215px]' : 'max-h-[185px]'
+                          className={`w-full h-full ${
+                            isCover ? 'object-cover' : 'object-contain'
                           }`}
                         />
                       </div>
-                      <div className="px-2 py-1 bg-[#e0ddd8] text-[#3e3b32] text-[9px] leading-tight border-t border-[#a0947e]/50 truncate shrink-0">
+                      <div className="px-2.5 py-1 bg-[#e0ddd8] text-[#3e3b32] text-[9.5px] leading-tight border-t border-[#a0947e]/50 truncate shrink-0">
                         {item.caption}
                       </div>
                     </button>

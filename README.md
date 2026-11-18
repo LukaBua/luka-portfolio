@@ -14,8 +14,8 @@
 | **04 / 09** | **Work Experience** | **Cyber Infinity** (`Founder & CEO`, `2023–Present`), **Bank of Georgia** (`Backend Intern`, `Jul–Aug 2025`), **GITA FabLab** (`Engineering Intern`, `Jun–Nov 2023`) |
 | **05 / 09** | **Project 01 — CubeSat ADCS** | *Problem / Approach / Result / Learnt* + 1,400-run Monte Carlo figures (`35.07°` storm cap, `5.3 KB` INT8) & toggleable live 3D Gimbal/Telemetry on web |
 | **06 / 09** | **Project 02 — ShroudX** | *Problem / Approach / Result / Learnt* + highlighted **Where I Lost Marks** box (`8.47%` flicker, `1 vCPU / 1 GB RAM` load, time limits) + real Barnard's Star Diff/Blink/Scatter outputs |
-| **07 / 09** | **Continuous Learning** | **MIT ToT** (`2023`), **METUCube Thermal** (`6-Mo Build`), **NASA Space Apps Kaspi Judge/Mentor** (`2022`), **Citython Kutaisi Mentor** (`2023`), & METU Core Coursework (`2024–Present`), each labeled by format |
-| **08 / 09** | **Project 03 — MIT ToT Robot** | *Problem / Approach / Result / Learnt* (`#1` overall / `1*` Best Prototype) + 3 real competition rover photos |
+| **07 / 09** | **Project 03 — MIT ToT Robot** | *Problem / Approach / Result / Learnt* (`#1` overall / `1*` Best Prototype) + 3 real competition rover photos |
+| **08 / 09** | **Continuous Learning** | **METUCube Thermal**, **MIT ToT Cohort (`2023`)**, **NASA Space Apps Kaspi Judge/Mentor (`2022`)**, **Citython Kutaisi Mentor (`2023`)**, & METU Core Coursework, labeled by format |
 | **09 / 09** | **Closing & Contact** | Direct email, `github.com/LukaBua`, `linkedin.com/in/lukabuachidze`, copy email & one-click 9-page PDF export |
 
 ---

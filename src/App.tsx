@@ -23,8 +23,8 @@ const PAGE_NAV = [
   { num: '04', label: 'Experience' },
   { num: '05', label: 'ADCS' },
   { num: '06', label: 'ShroudX' },
-  { num: '07', label: 'Learning' },
-  { num: '08', label: 'MIT ToT' },
+  { num: '07', label: 'MIT ToT' },
+  { num: '08', label: 'Learning' },
   { num: '09', label: 'Contact' },
 ];
 
@@ -76,7 +76,7 @@ export function App() {
         </div>
       </nav>
 
-      {/* 9-Page Engineering Dossier Stack */}
+      {/* 9-Page Engineering Dossier Stack: 05-07 Projects together, 08 Learning, 09 Contact */}
       <main className="print-stack max-w-[1328px] mx-auto px-3 sm:px-6 py-6 sm:py-8 flex flex-col gap-6 sm:gap-8">
         <CoverPage />
         <AboutPage />
@@ -91,11 +91,11 @@ export function App() {
           project={PROJECT_SHROUDX}
           onInspectMedia={setLightboxAsset}
         />
-        <LearningPage />
         <ProjectFourBoxPage
           project={PROJECT_MIT_TOT}
           onInspectMedia={setLightboxAsset}
         />
+        <LearningPage />
         <ClosingPage onPrintPdf={handlePrintPdf} />
       </main>
 

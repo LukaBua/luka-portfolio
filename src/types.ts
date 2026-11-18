@@ -56,6 +56,7 @@ export interface ProjectMediaItem {
   src: string;
   badge: string;
   surface?: 'dark' | 'light';
+  fit?: 'contain' | 'cover';
 }
 
 export interface FourBoxContent {
