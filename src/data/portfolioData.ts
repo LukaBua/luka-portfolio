@@ -145,7 +145,7 @@ export const EXPERIENCES: ExperienceEntry[] = [
     logo: 'cyber-infinity',
     role: 'Founder & CEO',
     company: 'Cyber Infinity',
-    dates: '2023 – Present',
+    dates: '2023 – 2024',
     location: 'Tbilisi, Georgia',
     summary:
       'Founded a robotics venture developing AI-powered commercial promoter robots from blank-sheet CAD to active commercial operation.',

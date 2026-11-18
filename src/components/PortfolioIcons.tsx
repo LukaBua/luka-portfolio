@@ -1,4 +1,6 @@
 import React from 'react';
+import bogLogo from '../assets/logos/bog_logo.png';
+import gitaLogo from '../assets/logos/gita_logo.png';
 import type { CompanyLogoId, FlagCode, ToolIconId } from '../types';
 
 /** Crisp vector national flags so language indicators export cleanly to PDF. */
@@ -88,17 +90,12 @@ export const ToolMark: React.FC<{ id: ToolIconId }> = ({ id }) => {
   );
 };
 
-/** Monochrome geometric emblem for Page 4 organizations (no placeholder hotlinks). */
+/** Organization logo / emblem for Page 4 Work Experience. */
 export const CompanyMark: React.FC<{ id: CompanyLogoId }> = ({ id }) => {
   if (id === 'cyber-infinity') {
     return (
-      <div className="w-10 h-10 bg-[#090807] border border-[#1d6291]/60 flex items-center justify-center shrink-0">
-        <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
-          <path
-            d="M8.5 16c0-2.5 2-4.5 4.5-4.5 3 0 4.5 4.5 6 4.5 2.5 0 4.5 2 4.5 4.5"
-            stroke="#88a2bd"
-            strokeWidth="0"
-          />
+      <div className="w-11 h-11 bg-[#090807] border border-[#1d6291]/60 flex items-center justify-center shrink-0">
+        <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
           <path
             d="M6.5 16c0-2.8 2.2-5 4.8-5 2.7 0 4.7 3.4 4.7 5s2 5 4.7 5c2.6 0 4.8-2.2 4.8-5s-2.2-5-4.8-5c-2.7 0-4.7 3.4-4.7 5s-2 5-4.7 5c-2.6 0-4.8-2.2-4.8-5Z"
             stroke="#e0ddd8"
@@ -112,24 +109,22 @@ export const CompanyMark: React.FC<{ id: CompanyLogoId }> = ({ id }) => {
   }
   if (id === 'bog') {
     return (
-      <div className="w-10 h-10 bg-[#341f10] border border-[#a0947e]/60 flex items-center justify-center shrink-0">
-        <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
-          <rect x="6" y="7" width="20" height="3" fill="#e0ddd8" />
-          <rect x="8" y="12" width="3" height="10" fill="#c6b7a2" />
-          <rect x="14.5" y="12" width="3" height="10" fill="#c6b7a2" />
-          <rect x="21" y="12" width="3" height="10" fill="#c6b7a2" />
-          <rect x="5" y="23" width="22" height="3" fill="#e0ddd8" />
-        </svg>
+      <div className="w-11 h-11 border border-[#a0947e]/60 overflow-hidden bg-[#090807] shrink-0">
+        <img
+          src={bogLogo}
+          alt="Bank of Georgia logo"
+          className="w-full h-full object-cover"
+        />
       </div>
     );
   }
   return (
-    <div className="w-10 h-10 bg-[#1d6291] border border-[#b1bdca]/60 flex items-center justify-center shrink-0">
-      <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
-        <circle cx="16" cy="16" r="8.5" stroke="#e0ddd8" strokeWidth="1.8" strokeDasharray="3 2" />
-        <polygon points="16,9 22,20 10,20" stroke="#e0ddd8" strokeWidth="1.8" fill="none" />
-        <circle cx="16" cy="16.5" r="1.7" fill="#c6b7a2" />
-      </svg>
+    <div className="w-11 h-11 border border-[#a0947e]/60 bg-white p-1 flex items-center justify-center shrink-0">
+      <img
+        src={gitaLogo}
+        alt="Georgia's Innovation and Technology Agency logo"
+        className="w-full h-full object-contain"
+      />
     </div>
   );
 };
