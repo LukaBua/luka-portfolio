@@ -4,54 +4,194 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --color-cyber-black: #060709;
-  --color-cyber-deep: #090a0f;
-  --color-cyber-cyan: #00f0ff;
-  --color-cyber-blue: #3b82f6;
-  --color-cyber-amber: #f59e0b;
+  /* Exact 12-swatch engineering dossier palette */
+  --color-pal-cream: #e0ddd8;
+  --color-pal-sand: #c6b7a2;
+  --color-pal-taupe: #a0947e;
+  --color-pal-blue-deep: #1d6291;
+  --color-pal-blue-slate: #718fa7;
+  --color-pal-blue-mid: #88a2bd;
+  --color-pal-blue-mist: #b1bdca;
+  --color-pal-ink: #090807;
+  --color-pal-olive-dark: #3e3b32;
+  --color-pal-olive-mid: #6f6856;
+  --color-pal-bronze: #493716;
+  --color-pal-umber: #341f10;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
-    background-color: #060709;
-    color: #ffffff;
-    color-scheme: dark;
+    background-color: #141210;
+    color: #090807;
+    color-scheme: light dark;
   }
 
   body {
-    background: radial-gradient(circle at 50% 0%, #0b0e17 0%, #060709 75%);
+    margin: 0;
     min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(29, 98, 145, 0.16), transparent 45%),
+      radial-gradient(circle at 85% 100%, rgba(160, 148, 126, 0.12), transparent 45%),
+      #141210;
   }
 }
 
-/* Technical blueprint dot-grid & subtle coordinate sub-grid */
-.bg-tech-grid {
+/* Subtle architectural blueprint grid for cream pages */
+.bg-cream-grid {
+  background-color: #e0ddd8;
   background-image:
-    radial-gradient(rgba(0, 240, 255, 0.14) 1px, transparent 1px),
-    linear-gradient(to right, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
-  background-size: 24px 24px, 96px 96px, 96px 96px;
+    linear-gradient(to right, rgba(111, 104, 86, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(111, 104, 86, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-/* Technical dark-field blending for white-background scientific benchmark plots */
-.hud-figure-darkfield {
-  filter: invert(1) hue-rotate(180deg) brightness(1.06) contrast(1.12);
-  mix-blend-mode: screen;
+/* Subtle technical blueprint grid for dark cover & closing pages */
+.bg-cover-blueprint {
+  background-color: #090807;
+  background-image:
+    linear-gradient(to right, rgba(113, 143, 167, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(113, 143, 167, 0.09) 1px, transparent 1px),
+    linear-gradient(to right, rgba(29, 98, 145, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 98, 145, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
 }
 
-/* Custom subtle scrollbars */
+/* Consistent folio spread sizing */
+.folio-page {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .folio-page {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+}
+
+/* Deterministic multi-column grids: 1-col on mobile (<768px), multi-col on desktop AND print PDF */
+.folio-grid-2,
+.folio-grid-3,
+.folio-grid-4,
+.folio-grid-about,
+.folio-grid-project,
+.folio-grid-learning,
+.folio-grid-closing,
+.folio-grid-lostmarks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .folio-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .folio-grid-3,
+  .folio-grid-lostmarks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .folio-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .folio-grid-about {
+    grid-template-columns: 4fr 8fr;
+  }
+  .folio-grid-project {
+    grid-template-columns: 7fr 5fr;
+  }
+  .folio-grid-learning {
+    grid-template-columns: 4fr 8fr;
+  }
+  .folio-grid-closing {
+    grid-template-columns: 7fr 5fr;
+  }
+}
+
+/* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #060709;
+  background: #141210;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #6f6856;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
+  background: #1d6291;
+}
+
+/* Exact 9-page 16:9 widescreen PDF export rules */
+@page {
+  size: 13.3333in 7.5in;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-stack {
+    padding: 0 !important;
+    gap: 0 !important;
+    max-width: none !important;
+  }
+
+  .folio-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .folio-grid-3,
+  .folio-grid-lostmarks {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  .folio-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  .folio-grid-about,
+  .folio-grid-learning {
+    grid-template-columns: 4fr 8fr !important;
+  }
+  .folio-grid-project,
+  .folio-grid-closing {
+    grid-template-columns: 7fr 5fr !important;
+  }
+  .folio-span-2 {
+    grid-column: span 2 / span 2 !important;
+  }
+
+  .folio-page {
+    width: 13.3333in !important;
+    height: 7.5in !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  .folio-page:last-of-type {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
 }
