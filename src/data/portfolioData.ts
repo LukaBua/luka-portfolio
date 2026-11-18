@@ -26,7 +26,7 @@ export const PROFILE = {
   linkedinUrl: 'https://linkedin.com/in/lukabuachidze',
   linkedinHandle: 'linkedin.com/in/lukabuachidze',
   originStory:
-    'I got into engineering by building physical hardware early in Georgia—prototyping machines in FabLabs and autonomous rovers—before choosing Aerospace Engineering at METU to work where hardware, simulation, and flight margins meet.',
+    "I have always enjoyed everything about hardware—from helping my neighbor fix a chicken coop door when I was 8 to watching Cowboy Bebop and admiring the flying vehicles in Emperors of the Galaxy. That fascination led me to aerospace engineering for its potential in humanity's future, even though the sector is not yet in first-phase development in my country.",
   currentRoleNote:
     'Studying Aerospace Engineering in a 100% English-medium curriculum at METU, serving as Cohort Representative (2024–25) and International Integration Lead (2025–26). Recently joined METUCube inside the Thermal Subsystem on a 3U CubeSat scheduled to complete within 6 months.',
   outsideProjectsNote:
